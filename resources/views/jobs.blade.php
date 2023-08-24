@@ -207,60 +207,22 @@
 
                 <div class="col-lg-8">
                     <div class="row">
+                         @foreach($postedJobs as $job)
                         <div class="col-md-6">
                             <div class="trainer-item">
-                                <div class="image-thumb">
-                                    <img src="{{ asset('images/product-1-720x480.jpg') }}" alt="">
-                                </div>
                                 <div class="down-content">
-                                    <span> <sup>$</sup>70 000 </span>
-
-                                    <h4>Lorem ipsum dolor sit amet, consectetur</h4>
-
-                                    <p>Medical &nbsp;/&nbsp; Health Jobs</p>
+                                    <h4>{{ $job->job_title }}</h4>
+                                    <p>{{ $job->company_name }}</p>
+                                    <span> <sup>₹</sup>{{ $job->salary }} {{ $job->salary_type }}</span>
+                                    <p>{{ $job->location }}</p>
 
                                     <ul class="social-icons">
-                                        <li><a href="job-details.html">+ View More</a></li>
+                                        <button class="p-2"><li><a href="">View details</a></li></button>
                                     </ul>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="trainer-item">
-                                <div class="image-thumb">
-                                    <img src="{{ asset('images/product-2-720x480.jpg') }}" alt="">
-                                </div>
-                                <div class="down-content">
-                                    <span> <sup>$</sup>70 000 </span>
-
-                                    <h4>Lorem ipsum dolor sit amet, consectetur</h4>
-
-                                    <p>Medical &nbsp;/&nbsp; Health Jobs</p>
-
-                                    <ul class="social-icons">
-                                        <li><a href="job-details.html">+ View More</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="trainer-item">
-                                <div class="image-thumb">
-                                    <img src="{{ asset('images/product-3-720x480.jpg') }}" alt="">
-                                </div>
-                                <div class="down-content">
-                                    <span> <sup>$</sup>70 000 </span>
-
-                                    <h4>Lorem ipsum dolor sit amet, consectetur</h4>
-
-                                    <p>Medical &nbsp;/&nbsp; Health Jobs</p>
-
-                                    <ul class="social-icons">
-                                        <li><a href="job-details.html">+ View More</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
             </div>

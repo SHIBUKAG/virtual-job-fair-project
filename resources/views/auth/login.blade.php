@@ -49,6 +49,14 @@
         .submit-button:hover {
             background-color: #45a049;
         }
+
+        .alert-success {
+        background-color: #dff0d8;
+        color: #3c763d;
+        border: 1px solid #d6e9c6;
+        padding: 4%;
+        margin-bottom: 5%;
+    }
     </style>
 
 <body>
@@ -71,9 +79,16 @@
             </div>
         </div>
     </section>
-    
+
     <div class="form-container mt-4">
-                <form method="POST" action="#">
+        @if (Session::has('success'))
+            <div class="alert-success mt-4">
+                <p>{{ Session::get('success') }}</p>
+            </div>
+        @endif
+        
+
+                <form method="POST" action="/login">
                     @csrf
             
                     <div class="form-group">
@@ -95,7 +110,7 @@
                     <div class="form-group">
                         <label for="role">Role</label>
                         <select id="role" name="role" required>
-                            <option value="job_seeker">Job Seeker</option>
+                            <option value="job_seeker" >Job Seeker</option>
                             <option value="employer">Employer</option>
                         </select>
                         @error('role')

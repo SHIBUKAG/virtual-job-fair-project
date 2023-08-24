@@ -28,6 +28,7 @@
 
     .form-group input[type="text"],
     .form-group input[type="email"],
+    .form-group input[type="password"],
     .form-group textarea {
       width: 100%;
       padding: 10px;
@@ -64,11 +65,12 @@
           </div>
 
       </section>
-      <div class="form-container">
-        <form id="registration-form" method="POST" action="submit.php">
+      <div class="form-container" >
+        <form id="registration-form" method="POST" action="/employerRegister">
+          @csrf
           <div class="form-group">
             <label for="company-name">Company Name:</label>
-            <input type="text" id="company-name" name="company_name" required>
+            <input type="text" id="company-name" name="companyName" required>
           </div>
           <div class="form-group">
             <label for="industry">Industry:</label>
@@ -80,7 +82,7 @@
           </div>
           <div class="form-group">
             <label for="contact-name">Contact Name:</label>
-            <input type="text" id="contact-name" name="contact_name" required>
+            <input type="text" id="contact-name" name="contactName" required>
           </div>
           <div class="form-group">
             <label for="email">Email:</label>
@@ -93,6 +95,10 @@
           <div class="form-group">
             <label for="website">Website:</label>
             <input type="text" id="website" name="website" required>
+          </div>
+          <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
           </div>
           <div class="form-group">
             <input type="submit" value="Submit">

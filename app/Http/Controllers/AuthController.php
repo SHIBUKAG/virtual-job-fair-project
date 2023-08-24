@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Hash;
 
 use Illuminate\Http\Request;
 use App\Models\JobSeeker;
@@ -25,18 +25,20 @@ class AuthController extends Controller
         return view('auth.employerRegister');
     }
 
-    public function employerRegistration()
+    public function employerRegistration(Request $request)
     {
-        // Validate the user input
-        $this->validate($request, [
-            'companyName' => 'required|string|max:255',
-            'industry' => 'required|string|max:255',
-            'location' => 'required|string|max:255',
-            'contactName' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:employers',
-            'phone' => 'required|string|max:20',
-            'website' => 'required|string|max:255',
-        ]);
+        $email = $request->email;
+
+        // Check if the user already exists
+        $existingUser = Employer::where('email', $email)->first();
+
+        if ($existingUser) {
+            // User already exists, handle the error or redirect back with a message
+            return redirect()->back()->withErrors(['email' => 'User with this email already exists.']);
+        }
+
+        
+        
 
         // Create a new employer record
         $employer = new Employer();
@@ -45,37 +47,40 @@ class AuthController extends Controller
         $employer->location = $request->location;
         $employer->contactName = $request->contactName;
         $employer->email = $request->email;
+        $employer->password = $request->password;
         $employer->phone = $request->phone;
         $employer->website = $request->website;
+
         $employer->save();
 
         // Redirect the user after successful registration
         return redirect('/login')->with('success', 'Registration completed successfully.');
     }
 
-    public function jobSeekerRegistration()
+    public function jobSeekerRegistration(Request $request)
     {
-        $this->validate($request, [
-            'firstName' => 'required|string|max:255',
-            'lastName' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:job_seekers',
-            'phone' => 'required|string|max:20',
-            'address' => 'required|string',
-            'skills' => 'required|string',
-            'experience' => 'required|string',
-            'education' => 'required|string',
-            'resume' => 'required|file|mimes:pdf,doc,docx|max:2048',
-        ]);
+        if ($request->hasFile('resume')) {
+            $resumePath = $request->file('resume')->store('resumes');
+        } else {
+            $resumePath = "Resume is not attached";
+        }   
 
-        //file upload
-        $resume = $request->file('resume');
-        $resumePath = $resume->store('resumes');
+        $email = $request->email;
+        
+        // Check if the user already exists
+        $existingUser = JobSeeker::where('email', $email)->first();
+
+        if ($existingUser) {
+            // User already exists, handle the error or redirect back with a message
+            return redirect()->back()->withErrors(['email' => 'User with this email already exists.']);
+        }
 
         // Create a new job seeker record
         $jobSeeker = new JobSeeker();
         $jobSeeker->firstName = $request->firstName;
         $jobSeeker->lastName = $request->lastName;
         $jobSeeker->email = $request->email;
+        $jobSeeker->password = $request->password;
         $jobSeeker->phone = $request->phone;
         $jobSeeker->address = $request->address;
         $jobSeeker->skills = $request->skills;
@@ -90,33 +95,60 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        $credentials = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-            'role' => 'required|in:job_seeker,employer',
-        ]);
+    
+        $credentials = $request->only('email', 'password', 'role');
+    
+        if($credentials)
+        {
+            if($credentials['role']=="job_seeker")
+            {
+                $user = JobSeeker::where('email', $credentials['email'])->first();
 
-        $role = $request->role;
+                if ($user && $user->password === $credentials['password']) {
+                    // Authentication successful
+                    Auth::guard('job_seeker')->login($user);
+                    session([
+                        'status' => 'true'
+                    ]);
+                    return redirect('/');
+                }
 
-        if (Auth::attempt($credentials)) {
-            // Authentication successful
-            if ($role === 'job_seeker' && Auth::user()->isJobSeeker()) {
-                return redirect('/job_seeker/dashboard');
-            } elseif ($role === 'employer' && Auth::user()->isEmployer()) {
-                return redirect('/employer/dashboard');
+                // Authentication failed
+                return redirect()->back()->withErrors([
+                    'login' => 'Invalid email or password.',
+                ]);
+
+            }elseif($credentials['role']=="employer")
+            {
+                $user = Employer::where('email', $credentials['email'])->first();
+
+                if ($user && $user->password === $credentials['password']) {
+                    // Authentication successful
+                    Auth::guard('employer')->login($user);
+                    session([
+                        'status' => 'true',
+                        'user_id' => $user->id,
+                        'user_name' => $user->companyName,
+                        'user_email' => $user->email,
+                    ]);
+                    return redirect('/employer/dashboard');
+                }
+
+                // Authentication failed
+                return redirect()->back()->withErrors([
+                    'login' => 'Invalid email or password.',
+                ]);
             }
         }
-
-        // Authentication failed
-        return redirect()->back()->withErrors([
-            'login' => 'Invalid email, password, or role.',
-        ]);
     }
+
+
 
     public function logout()
     {
         Auth::logout();
-        return redirect('/login');
+        session(['status' => 'false']);
+        return redirect('/');
     }
 
     

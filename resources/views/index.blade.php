@@ -49,8 +49,8 @@
                 <h6>Lorem ipsum dolor sit amet</h6>
                 <h2>Find the perfect <em>Job</em></h2>
                 <div class="main-button">
-                    <a href="#">Post Job</a>
-                    <a href="#">Find Job</a>
+                    <a href="/employer/dashboard">Post Job</a>
+                    <a href="/jobs">Find Job</a>
                 </div>
             </div>
         </div>
