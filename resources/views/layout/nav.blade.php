@@ -9,10 +9,9 @@
                     <!-- ***** Menu Start ***** -->
                     <ul class="nav">
                         <li><a href="/" class="active">Home</a></li>
-                        <li><a href="jobs">Find Jobs</a></li>
+                        <li><a href="/jobs">Find Jobs</a></li>
                         <li><a href="about">About Us</a></li>
                         <li><a href="contact">Contact</a></li>
-
                         @if (session('status')=='true')
                             <li><a href="/logout">Logout</a></li>
                         @else

@@ -28,8 +28,8 @@
                   <div class="cta-content">
                       <br>
                       <br>
-                      <h2>POST <em> JOB</em></h2>
-                      <p>Easily create and publish new job opportunities to attract potential candidates and grow your team.</p>
+                      <h2>Edit <em> JOB</em></h2>
+                      <p>Easily create posted jobs</p>
                   </div>
               </div>
           </div>
@@ -37,17 +37,30 @@
   </section>
   
   <div class="container mt-5">
-    <h2 class="mb-4">Post a Job</h2>
-    <form id="job-posting-form" method="POST" action="/submit_job">
+    @if (Session::has('success'))
+            <div class="alert alert-success" role="alert">
+                <p>{{ Session::get('success') }}</p>
+              </div>
+        @endif
+        @if (Session::has('error'))
+            <div class="alert alert-warning" role="alert">
+                <p>{{ Session::get('error') }}</p>
+              </div>
+        @endif
+        
+    <h2>Edit Job Post</h2>
+    <form action="{{ route('update_post', ['id' => $post->id]) }}" method="POST">
         @csrf
+        @method('PUT')
+
         <div class="form-group">
             <label for="job-title">Job Title:</label>
-            <input type="text" class="form-control" id="job-title" name="jobTitle" required>
+            <input type="text" class="form-control" id="job-title" name="jobTitle" value="{{ $post->job_title }}" required>
             <div class="error-message"></div>
         </div>
         <div class="form-group">
             <label for="company-name">Company Name:</label>
-            <input type="text" class="form-control" id="company-name" value="{{ Auth::user()->companyName; }}" name="companyName" required readonly>
+            <input type="text" class="form-control" id="company-name" name="companyName" value="{{ $post->company_name }}" required readonly>
             <div class="error-message"></div>
         </div>
         <div class="form-group">
@@ -62,10 +75,10 @@
         <div class="form-group">
             <label for="salary">Estimated Salary:</label>
             <div class="input-group">
-                <input type="number" class="form-control" id="salary" name="estimatedSalary" required>
+                <input type="number" class="form-control" id="salary" name="estimatedSalary" value="{{ $post->salary }}" required>
                 <div class="error-message"></div>
                 <div class="input-group-append">
-                    <select class="form-control" id="salary-type" name="salaryType" required>
+                    <select class="form-control" id="salary-type" name="salaryType" value="{{ $post->salary_type }}" required>
                         <option value="monthly">Per Month</option>
                         <option value="yearly">Per Year</option>
                     </select>
@@ -76,22 +89,22 @@
 
         <div class="form-group">
             <label for="job-description">Job Description:</label>
-            <textarea class="form-control" id="job-description" name="jobDescription" rows="5" required></textarea>
+            <textarea class="form-control" id="job-description" name="jobDescription" rows="5" value="" required>{{ $post->job_description }}</textarea>
             <div class="error-message"></div>
         </div>
         <div class="form-group">
           <label for="location">Location:</label>
-          <input type="text" class="form-control" id="location" name="location" required>
+          <input type="text" class="form-control" id="location" name="location" value="{{ $post->location }}" required>
           <div class="error-message"></div>
       </div>
       <div class="form-group">
           <label for="required-skills">Required Skills:</label>
-          <input type="text" class="form-control" id="required-skills" name="requiredSkills" required>
+          <input type="text" class="form-control" id="required-skills" name="requiredSkills" value="{{ $post->required_skills }}" required>
           <small class="form-text text-muted">Separate skills with commas (e.g. Java, Python, JavaScript)</small>
           <div class="error-message"></div>
       </div>
         <div class="form-group">
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary">Update</button>
         </div>
     </form>
 </div>
@@ -153,16 +166,8 @@
 
             // Validate Job Description
             const jobDescriptionInput = document.getElementById("job-description");
-            const jobDescriptionValue = jobDescriptionInput.value.trim();
-
-            if (jobDescriptionValue === "") {
+            if (jobDescriptionInput.value.trim() === "") {
                 displayErrorMessage(jobDescriptionInput, "Job Description is required.");
-                isValid = false;
-                if (!firstInvalidField) {
-                    firstInvalidField = jobDescriptionInput;
-                }
-            } else if (jobDescriptionValue.length < 150) {
-                displayErrorMessage(jobDescriptionInput, "Job Description must contain at least 150 characters.");
                 isValid = false;
                 if (!firstInvalidField) {
                     firstInvalidField = jobDescriptionInput;
@@ -229,4 +234,17 @@
     <!-- Global Init -->
     <script src="{{ asset('js/custom.js') }}"></script>
   </body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+</body>
 </html>

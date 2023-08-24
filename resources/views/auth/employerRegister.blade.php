@@ -45,6 +45,10 @@
       border-radius: 4px;
       cursor: pointer;
     }
+    
+    .error-message {
+      color: #dc3545; /* Red color */
+    }
   </style>
 </head>
 <body>
@@ -105,6 +109,119 @@
           </div>
         </form>
       </div>
+
+      <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.getElementById("registration-form");
+    
+            form.addEventListener("submit", function (event) {
+                // Prevent the form from submitting
+                event.preventDefault();
+    
+                // Clear previous error messages
+                const errorMessages = form.querySelectorAll(".error-message");
+                errorMessages.forEach(message => message.textContent = "");
+    
+                let isValid = true;
+                let firstInvalidField = null;
+    
+                // Validate Company Name
+                const companyNameInput = document.getElementById("company-name");
+                if (companyNameInput.value.trim() === "") {
+                    displayErrorMessage(companyNameInput, "Company Name is required.");
+                    isValid = false;
+                    if (!firstInvalidField) {
+                        firstInvalidField = companyNameInput;
+                    }
+                }
+    
+                // Validate Industry
+                const industryInput = document.getElementById("industry");
+                if (industryInput.value.trim() === "") {
+                    displayErrorMessage(industryInput, "Industry is required.");
+                    isValid = false;
+                    if (!firstInvalidField) {
+                        firstInvalidField = industryInput;
+                    }
+                }
+    
+                // Validate Location
+                const locationInput = document.getElementById("location");
+                if (locationInput.value.trim() === "") {
+                    displayErrorMessage(locationInput, "Location is required.");
+                    isValid = false;
+                    if (!firstInvalidField) {
+                        firstInvalidField = locationInput;
+                    }
+                }
+    
+                // Validate Contact Name
+                const contactNameInput = document.getElementById("contact-name");
+                if (contactNameInput.value.trim() === "") {
+                    displayErrorMessage(contactNameInput, "Contact Name is required.");
+                    isValid = false;
+                    if (!firstInvalidField) {
+                        firstInvalidField = contactNameInput;
+                    }
+                }
+    
+                // Validate Email
+                const emailInput = document.getElementById("email");
+                if (emailInput.value.trim() === "") {
+                    displayErrorMessage(emailInput, "Email is required.");
+                    isValid = false;
+                    if (!firstInvalidField) {
+                        firstInvalidField = emailInput;
+                    }
+                }
+    
+                // Validate Phone
+                const phoneInput = document.getElementById("phone");
+                if (phoneInput.value.trim() === "") {
+                    displayErrorMessage(phoneInput, "Phone is required.");
+                    isValid = false;
+                    if (!firstInvalidField) {
+                        firstInvalidField = phoneInput;
+                    }
+                }
+    
+                // Validate Website
+                const websiteInput = document.getElementById("website");
+                if (websiteInput.value.trim() === "") {
+                    displayErrorMessage(websiteInput, "Website is required.");
+                    isValid = false;
+                    if (!firstInvalidField) {
+                        firstInvalidField = websiteInput;
+                    }
+                }
+    
+                // Validate Password
+                const passwordInput = document.getElementById("password");
+                if (passwordInput.value.trim() === "") {
+                    displayErrorMessage(passwordInput, "Password is required.");
+                    isValid = false;
+                    if (!firstInvalidField) {
+                        firstInvalidField = passwordInput;
+                    }
+                }
+    
+                // If all validation passes, submit the form
+                if (isValid) {
+                    form.submit();
+                } else if (firstInvalidField) {
+                    firstInvalidField.focus();
+                }
+            });
+    
+            function displayErrorMessage(inputElement, message) {
+                const errorMessage = document.createElement("div");
+                errorMessage.classList.add("error-message");
+                errorMessage.textContent = message;
+                inputElement.parentNode.appendChild(errorMessage);
+            }
+        });
+    </script>
+    
 </body>
 </html>
 

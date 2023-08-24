@@ -3,20 +3,18 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Employer Dashboard</title>
+    <title>Post Jobs</title>
     <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}">
 
     <link rel="stylesheet" type="text/css" href="{{ asset('css/font-awesome.css')}}">
 
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-    <style>
-      
-    </style>
-  </head>
+    
+</head>
   <body>
     
-    @include('employer.nav_emp')
+    @include('layout.nav')
 
     <section class="section section-bg" id="call-to-action" style="background-image: url({{ asset('images/banner-image-1-1920x500.jpg') }})">
       <div class="container">
@@ -25,12 +23,36 @@
                   <div class="cta-content">
                       <br>
                       <br>
-                      <h2>EMPLOYER <em> DASHBOARD</em></h2>
+                      <h2>VIEW <em> JOB DETAILS</em></h2>
+                      <p>Lorem ipsum dolor sit amet consectetur.</p>
                   </div>
               </div>
           </div>
       </div>
   </section>
+  
+
+  <div class="container mt-4">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">{{ $job->job_title }}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">{{ $job->company_name }}</h6>
+            <p class="card-subtitle mb-2 text-muted"><b>Estimated Salary: </b>{{ $job->salary }} {{ $job->salary_type }}</p>
+            <p class="card-subtitle mb-2 text-muted"><b>Location: </b>{{ $job->location }}</p>
+            <p class="card-text"><b>Job Type:</b> {{ $job->job_type }}</p>
+            
+            
+        </div>
+    </div>
+    <div class="card mt-4">
+        <div class="card-body">
+            <h6 class="card-subtitle mb-2 text-muted"><b>Description</b></h6>
+            <p class="card-text">{{ $job->job_description }}</p>
+            <p class="card-text mt-4"><b>Required Skills:</b> {{ $job->required_skills }}</p>
+            <a href="{{ route('viewJobs', ['id' => $job->id]) }}" class="btn btn-primary">Apply Now</a>
+        </div>
+    </div>
+  </div>
 
 
 
@@ -40,6 +62,7 @@
     <!-- Bootstrap -->
     <script src="{{ asset('js/popper.js') }}"></script>
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 
     <!-- Plugins -->
     <script src="{{ asset('js/scrollreveal.min.js') }}"></script>

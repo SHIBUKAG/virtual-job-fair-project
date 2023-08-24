@@ -10,7 +10,7 @@
                   <ul class="nav">
                       <li><a href="/employer/dashboard" class="active">Dashboard</a></li>
                       <li><a href="/post_job">Post Job</a></li>
-                      <li><a href="/employer/manage_job">Manage Job</a></li> 
+                      <li><a href="/employer/showjobs">Manage Job</a></li> 
                       <li><a href="/logout">Logout</a></li> 
                   </ul>
                   <a class='menu-trigger'>

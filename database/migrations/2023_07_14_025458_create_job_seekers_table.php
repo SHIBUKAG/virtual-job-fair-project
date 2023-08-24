@@ -23,6 +23,7 @@ return new class extends Migration
             $table->text('experience');
             $table->text('education');
             $table->string('resume_path')->nullable();
+            $table->string('verified')->default('false');
             $table->timestamps();
         });
     }

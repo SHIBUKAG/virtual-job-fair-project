@@ -35,19 +35,22 @@ Route::get('/contact', function(){
 
 //job_seeker routes
 Route::get('/jobs', [JobSeekerController::class, 'jobs'])->name('jobs');
-
+Route::get('/view_jobs/{id}', [JobSeekerController::class, 'viewJobs'])->name('viewJobs');
 
 
 //employer routes 
 Route::middleware(['auth:employer'])->group(function () {
-    Route::get('/post_job', [JobPostingController::class, 'create'])->name('create');
-    Route::get('/employer/manage_job', [JobPostingController::class, 'showPostedJobs'])->name('employer.jobs');
-    Route::post('/submit_job', [JobPostingController::class, 'store'])->name('store');
-    Route::get('/employer/dashboard', function () {
-        return view('employer.dashboard');
-    });
-});
 
+    Route::get('/employer/dashboard', [JobPostingController::class, 'showDashboard'])->name('employer.dashboard');
+    Route::get('/post_job', [JobPostingController::class, 'create'])->name('create');
+    Route::get('/employer/showjobs', [JobPostingController::class, 'showPostedJobs'])->name('employer.jobs');
+    Route::post('/submit_job', [JobPostingController::class, 'store'])->name('store');
+    Route::get('/employer/manage_posts', [JobPostingController::class, 'managePosts'])->name('employer.manage_posts');
+    Route::get('/employer/edit_post/{id}', [JobPostingController::class, 'editPost'])->name('edit_post');
+    Route::put('/employer/update_post/{id}', [JobPostingController::class, 'updatePost'])->name('update_post');
+    Route::get('/employer/delete_post/{id}', [JobPostingController::class, 'deletePost'])->name('delete_post');
+
+});
 
 
 
@@ -65,3 +68,4 @@ Route::middleware(['web'])->group(function () {
 });
 
 
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -217,7 +217,7 @@
                                     <p>{{ $job->location }}</p>
 
                                     <ul class="social-icons">
-                                        <button class="p-2"><li><a href="">View details</a></li></button>
+                                        <button class="p-2"><li><a href="{{ route('viewJobs', ['id' => $job->id]) }}">View details</a></li></button>
                                     </ul>
                                 </div>
                             </div>

@@ -50,6 +50,10 @@
       border-radius: 4px;
       cursor: pointer;
     }
+
+    .error-message {
+      color: #dc3545; /* Red color */
+    }
   </style>
 </head>
 <body>
@@ -121,5 +125,138 @@
       </div>
     </form>
   </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const form = document.getElementById("registration-form");
+
+        form.addEventListener("submit", function (event) {
+            // Prevent the form from submitting
+            event.preventDefault();
+
+            // Clear previous error messages
+            const errorMessages = form.querySelectorAll(".error-message");
+            errorMessages.forEach(message => message.textContent = "");
+
+            let isValid = true;
+            let firstInvalidField = null;
+
+            // Validate First Name
+            const firstNameInput = document.getElementById("first-name");
+            if (firstNameInput.value.trim() === "") {
+                displayErrorMessage(firstNameInput, "First Name is required.");
+                isValid = false;
+                if (!firstInvalidField) {
+                    firstInvalidField = firstNameInput;
+                }
+            }
+
+            // Validate Last Name
+            const lastNameInput = document.getElementById("last-name");
+            if (lastNameInput.value.trim() === "") {
+                displayErrorMessage(lastNameInput, "Last Name is required.");
+                isValid = false;
+                if (!firstInvalidField) {
+                    firstInvalidField = lastNameInput;
+                }
+            }
+
+            // Validate Email
+            const emailInput = document.getElementById("email");
+            if (emailInput.value.trim() === "") {
+                displayErrorMessage(emailInput, "Email is required.");
+                isValid = false;
+                if (!firstInvalidField) {
+                    firstInvalidField = emailInput;
+                }
+            }
+
+            // Validate Password
+            const passwordInput = document.getElementById("password");
+            if (passwordInput.value.trim() === "") {
+                displayErrorMessage(passwordInput, "Password is required.");
+                isValid = false;
+                if (!firstInvalidField) {
+                    firstInvalidField = passwordInput;
+                }
+            }
+
+            // Validate Phone
+            const phoneInput = document.getElementById("phone");
+            if (phoneInput.value.trim() === "" || !phoneInput.checkValidity()) {
+                displayErrorMessage(phoneInput, "Valid Phone number is required (10 digits).");
+                isValid = false;
+                if (!firstInvalidField) {
+                    firstInvalidField = phoneInput;
+                }
+            }
+
+            // Validate Address
+            const addressInput = document.getElementById("address");
+            if (addressInput.value.trim() === "") {
+                displayErrorMessage(addressInput, "Address is required.");
+                isValid = false;
+                if (!firstInvalidField) {
+                    firstInvalidField = addressInput;
+                }
+            }
+
+            // Validate Skills
+            const skillsInput = document.getElementById("skills");
+            if (skillsInput.value.trim() === "") {
+                displayErrorMessage(skillsInput, "Skills are required.");
+                isValid = false;
+                if (!firstInvalidField) {
+                    firstInvalidField = skillsInput;
+                }
+            }
+
+            // Validate Experience
+            const experienceInput = document.getElementById("experience");
+            if (experienceInput.value.trim() === "") {
+                displayErrorMessage(experienceInput, "Experience is required.");
+                isValid = false;
+                if (!firstInvalidField) {
+                    firstInvalidField = experienceInput;
+                }
+            }
+
+            // Validate Education
+            const educationInput = document.getElementById("education");
+            if (educationInput.value.trim() === "") {
+                displayErrorMessage(educationInput, "Education is required.");
+                isValid = false;
+                if (!firstInvalidField) {
+                    firstInvalidField = educationInput;
+                }
+            }
+
+            // Validate Resume
+            const resumeInput = document.getElementById("resume");
+            if (resumeInput.value.trim() === "" || !resumeInput.files[0]) {
+                displayErrorMessage(resumeInput, "Resume is required.");
+                isValid = false;
+                if (!firstInvalidField) {
+                    firstInvalidField = resumeInput;
+                }
+            }
+
+            // If all validation passes, submit the form
+            if (isValid) {
+                form.submit();
+            } else if (firstInvalidField) {
+                firstInvalidField.focus();
+            }
+        });
+
+        function displayErrorMessage(inputElement, message) {
+            const errorMessage = document.createElement("div");
+            errorMessage.classList.add("error-message");
+            errorMessage.textContent = message;
+            inputElement.parentNode.appendChild(errorMessage);
+        }
+    });
+</script>
+
 </body>
 </html>

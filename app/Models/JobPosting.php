@@ -17,6 +17,7 @@ class JobPosting extends Model
         'job_description',
         'location',
         'required_skills',
+        'status'
     ];
 
 }

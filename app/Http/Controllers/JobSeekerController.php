@@ -14,4 +14,9 @@ class JobSeekerController extends Controller
         return view('jobs', compact('postedJobs'));
     }
 
+    public function viewJobs(Request $request, $id)
+    {
+        $job = JobPosting::findOrFail($id);
+        return view('jobDetails', compact('job'));
+    }
 }

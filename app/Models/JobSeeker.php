@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Auth\Authenticatable;
@@ -21,6 +22,7 @@ class JobSeeker extends Model implements Authenticatable
         'experience',
         'education',
         'resume',
+        'verified',
     ];
 
     public function getAuthIdentifierName()

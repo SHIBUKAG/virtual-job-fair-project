@@ -53,6 +53,7 @@ class AuthController extends Controller
 
         $employer->save();
 
+
         // Redirect the user after successful registration
         return redirect('/login')->with('success', 'Registration completed successfully.');
     }

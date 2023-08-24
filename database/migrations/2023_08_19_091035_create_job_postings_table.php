@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('job_postings', function (Blueprint $table) {
             $table->id();
+            $table->foreign('employer_id')->references('id')->on('employers');
             $table->string('job_title');
             $table->string('company_name');
             $table->enum('job_type', ['full_time', 'part_time', 'contract']);
@@ -22,7 +23,7 @@ return new class extends Migration
             $table->string('location');
             $table->string('required_skills');
             $table->unsignedBigInteger('employer_id');
-            $table->foreign('employer_id')->references('id')->on('employers');
+            $table->string('status')->default('active');
             $table->timestamps();
         });
     }

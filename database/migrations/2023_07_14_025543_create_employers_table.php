@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('phone');
             $table->string('website');
-
+            $table->string('verified')->default('false');
             $table->timestamps();
         });
     }

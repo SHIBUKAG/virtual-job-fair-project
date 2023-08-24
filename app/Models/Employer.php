@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Auth\Authenticatable;
@@ -11,14 +12,15 @@ class Employer extends Model implements Authenticatable
     use HasFactory;
 
     protected $fillable = [
-        'companyName',
+        'company_name',
         'industry',
         'location',
-        'contactName',
+        'contact_name',
         'email',
         'password',
         'phone',
         'website',
+        'verified',
     ];
 
     public function getAuthIdentifierName()

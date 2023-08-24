@@ -30,24 +30,22 @@
         </div>
     </section>
 
-    <div class="container mt-4">
-        <div class="row row-cols-1 row-cols-md-3 g-4">
-            @foreach($postedJobs as $job)
-            <div class="col">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ $job->job_title }}</h5>
-                        <p class="card-text">{{ $job->job_description }}</p>
-                        <p class="card-text"><strong>Location:</strong> {{ $job->location }}</p>
-                        <p class="card-text"><strong>Salary:</strong> {{ $job->salary }} {{ $job->salary_type }}</p>
-                        <a href="#" class="btn btn-primary">Manage</a>
-                        <a href="#" class="btn btn-primary">View Applicants</a>
-                    </div>
-                </div>
-            </div>
+    @include('employer.nav_emp')
+
+    @section('content')
+        <h2>Your Posted Jobs</h2>
+        <ul>
+            @foreach ($posts as $post)
+                <li>
+                    {{ $post->job_title }}
+                    <a href="{{ route('edit_post', ['id' => $post->id]) }}">Edit</a>
+                    <a href="{{ route('delete_post', ['id' => $post->id]) }}">Delete</a>
+                </li>
             @endforeach
-        </div>
-    </div>
+        </ul>
+    @endsection
+
+
     <!-- jQuery -->
     <script src="{{ asset('js/jquery-2.1.0.min.js') }}"></script>
 
