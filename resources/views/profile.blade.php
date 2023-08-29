@@ -17,6 +17,12 @@
           padding: 20px;
           margin-top: 40px; 
         }
+        .form-container2 {
+          max-width: 500px;
+          margin: auto;
+          padding: 20px;
+          margin-top: 20px; 
+        }
     
         .form-container h2 {
           text-align: center;
@@ -83,11 +89,11 @@
                 <b><p>{{ Session::get('success') }}</p></b>
               </div>
         @endif
-        {{-- @if (Session::has('error'))
+        @if (Session::has('error'))
             <div class="alert alert-warning" role="alert">
                 <b><p>{{ Session::get('error') }}</p></b>
               </div>
-        @endif --}}
+        @endif
   </div>
   <div class="form-container">
     <form id="registration-form" method="POST" action="{{ route('jobSeekerUpdateProfile', ['id' => $user->id]) }}" enctype="multipart/form-data">
@@ -128,16 +134,24 @@
         <input type="submit" value="Submit">
       </div>
     </form>
-
+  </div>
+  <div class="form-container2">
     <form id="registration-form" method="POST" action="{{ route('updateResume', ['id' => $user->id]) }}" enctype="multipart/form-data">
-    <div class="form-group">
-      <label for="resume">Resume:</label>
-      <input type="file" id="resume" name="resume" required accept=".pdf,.doc,.docx">
-    </div>
-    <div class="form-group">
-      <input type="submit" value="Submit">
-    </div>
-    </form>
+      @csrf
+      @if ($user->resume_path != "Resume is not attached")
+            <p><strong>Resume:</strong> <a href="{{ asset('storage/' . $user->resume_path) }}" target="_blank">View Resume</a></p>
+        @else
+            <p><strong>Resume:</strong> {{ $user->resume_path }}</p>
+        @endif
+        
+      <div class="form-group">
+        <label for="resume">Resume:</label>
+        <input type="file" id="resume" name="update_resume" required accept=".pdf,.doc,.docx">
+      </div>
+      <div class="form-group">
+        <input type="submit" value="Update Resume">
+      </div>
+      </form>
   </div>
 
     <!-- jQuery -->

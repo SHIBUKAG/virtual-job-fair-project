@@ -45,21 +45,53 @@
       </div>
   </section>
 
+  <div class="container">
+    <table class="table table-striped mt-4">
+        <thead>
+          <tr>
+            <th scope="col">Applicant Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Phone</th>
+            <th scope="col">Skills</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{ $user->firstName }} {{ $user->lastName }}</td>
+            <td>{{ $user->email }}</td>
+            <td>{{ $user->phone }}</td>
+            <td>{{ $user->skills }}</td>
+          </tr>
+        </tbody>
+        <thead>
+            <tr>
+              <th scope="col">Address</th>
+              <th scope="col">Experience</th>
+              <th scope="col">Education</th>
+              <th scope="col">Resume</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{{ $user->address }}</td>
+              <td>{{ $user->experience }}</td>
+              <td>{{ $user->education }}</td>
+              <td>
+                @if ($user->resume_path != "Resume is not attached")
+                    <p><a href="{{ asset('storage/' . $user->resume_path) }}" target="_blank">View Resume</a></p>
+                @else
+                    <p>{{ $user->resume_path }}</p>
+                @endif
+            </td>
+            </tr>
+          </tbody>
+      </table>
+  </div>
   <div class="user-details">
-    <h1>User Details</h1>
     <div class="user-info">
-        <p><strong>Name:</strong> {{ $user->firstName }} {{ $user->lastName }}</p>
-        <p><strong>Email:</strong> {{ $user->email }}</p>
-        <p><strong>Phone:</strong> {{ $user->phone }}</p>
-        <p><strong>Address:</strong> {{ $user->address }}</p>
-        <p><strong>Skills:</strong> {{ $user->skills }}</p>
-        <p><strong>Experience:</strong> {{ $user->experience }}</p>
-        <p><strong>Education:</strong> {{ $user->education }}</p>
-        @if ($user->resume_path != "Resume is not attached")
-            <p><strong>Resume:</strong> <a href="{{ asset('storage/' . $user->resume_path) }}" target="_blank">View Resume</a></p>
-        @else
-            <p><strong>Resume:</strong> {{ $user->resume_path }}</p>
-        @endif
+        <a href="#" class="btn btn-secondary">Chat</a>
+        <a href="#" class="btn btn-success">Hire</a>
+        <a href="#" class="btn btn-danger">Reject</a>
     </div>
 </div>
     <!-- jQuery -->

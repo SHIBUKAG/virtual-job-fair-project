@@ -49,6 +49,26 @@ class JobSeekerController extends Controller
         
     }
 
+    public function updateResume(Request $request, $id)
+    {
+        $user = JobSeeker::findOrFail($id);
+
+        if ($user) {
+            if ($request->hasFile('update_resume')) {
+                $resumePath = $request->file('update_resume')->store('resumes', 'public');
+
+                $user->update([
+                    'resume_path' => $resumePath,
+                ]);
+
+                return redirect()->back()->with('success', 'Resume updated successfully.');
+            } else {
+                return redirect()->back()->withErrors(['resume' => 'Please select a valid resume file.']);
+            }
+        }
+
+        return redirect()->back()->withErrors(['user' => 'User not found.']);
+    }
 
 
     public function applyJob(Request $request, $id)

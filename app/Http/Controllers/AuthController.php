@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-
+use Mail;
+use App\Mail\demoMail;
 use Illuminate\Http\Request;
 use App\Models\JobSeeker;
 use App\Models\Employer;
@@ -89,6 +90,7 @@ class AuthController extends Controller
         $jobSeeker->experience = $request->experience;
         $jobSeeker->education = $request->education;
         $jobSeeker->resume_path = $resumePath;
+
         $jobSeeker->save();
 
         
@@ -151,6 +153,16 @@ class AuthController extends Controller
         session()->flush(); // Clear all session data
         auth()->logout();
         return redirect('/');
+    }
+
+    public function sendMail()
+    {
+        $mailData = [
+            'title' => 'Mail form Virtual',
+            'body' => 'hello, this is testing',
+        ];
+
+        Mail::to('shivamkag2003@gmail.com')->send(new demoMail($mailData));
     }
 
     

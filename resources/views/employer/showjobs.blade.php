@@ -48,7 +48,7 @@
                 <div class="card h-100">
                     <div class="card-body">
                         <h5 class="card-title">{{ $job->job_title }}</h5>
-                        <p class="card-text">{{ Str::limit($job->job_description , 150) }}</p>
+                        <p class="card-text">{{ Str::limit($job->job_description ,150) }}</p>
                         <p class="card-text"><strong>Location:</strong> {{ $job->location }}</p>
                         <p class="card-text"><strong>Salary:</strong> {{ $job->salary }} {{ $job->salary_type }}</p>
                         @if ($job->status == 'active')

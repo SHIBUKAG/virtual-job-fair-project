@@ -34,14 +34,18 @@ Route::get('/contact', function(){
 });
 
 //job_seeker routes
-Route::get('/jobs', [JobSeekerController::class, 'jobs'])->name('jobs');
-Route::get('/profile', [JobSeekerController::class, 'profile'])->name('profile');
-Route::get('/view_jobs/{id}', [JobSeekerController::class, 'viewJobs'])->name('viewJobs');
-Route::get('/applyJob/{id}', [JobSeekerController::class, 'applyJob'])->name('applyJob');
-Route::get('/appliedJobs',[JobSeekerController::class, 'appliedJobs'])->name('appliedJobs');
-Route::post('/jobSeekerUpdateProfile/{id}',[JobSeekerController::class, 'jobSeekerUpdateProfile'])->name('jobSeekerUpdateProfile');
-Route::post('/updateResume/{id}',[JobSeekerController::class, 'updateResume'])->name('updateResume');
+Route::middleware(['auth:job_seeker'])->group(function () {
+    
+    Route::get('/profile', [JobSeekerController::class, 'profile'])->name('profile');
+    Route::get('/applyJob/{id}', [JobSeekerController::class, 'applyJob'])->name('applyJob');
+    Route::get('/appliedJobs',[JobSeekerController::class, 'appliedJobs'])->name('appliedJobs');
+    Route::post('/jobSeekerUpdateProfile/{id}',[JobSeekerController::class, 'jobSeekerUpdateProfile'])->name('jobSeekerUpdateProfile');
+    Route::post('/updateResume/{id}',[JobSeekerController::class, 'updateResume'])->name('updateResume');
 
+});
+
+Route::get('/jobs', [JobSeekerController::class, 'jobs'])->name('jobs');
+Route::get('/view_jobs/{id}', [JobSeekerController::class, 'viewJobs'])->name('viewJobs');
 
 //employer routes 
 Route::middleware(['auth:employer'])->group(function () {
@@ -73,3 +77,5 @@ Route::middleware(['auth:employer'])->group(function () {
 
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/send-mail', [AuthController::class, 'sendMail'])->name('sendMail');
