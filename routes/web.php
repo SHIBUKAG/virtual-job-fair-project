@@ -40,6 +40,7 @@ Route::get('/view_jobs/{id}', [JobSeekerController::class, 'viewJobs'])->name('v
 Route::get('/applyJob/{id}', [JobSeekerController::class, 'applyJob'])->name('applyJob');
 Route::get('/appliedJobs',[JobSeekerController::class, 'appliedJobs'])->name('appliedJobs');
 Route::post('/jobSeekerUpdateProfile/{id}',[JobSeekerController::class, 'jobSeekerUpdateProfile'])->name('jobSeekerUpdateProfile');
+Route::post('/updateResume/{id}',[JobSeekerController::class, 'updateResume'])->name('updateResume');
 
 
 //employer routes 

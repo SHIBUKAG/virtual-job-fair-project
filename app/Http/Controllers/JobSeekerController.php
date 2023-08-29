@@ -49,6 +49,8 @@ class JobSeekerController extends Controller
         
     }
 
+
+
     public function applyJob(Request $request, $id)
     {
         $jobid = $id;

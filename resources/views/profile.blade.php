@@ -128,6 +128,16 @@
         <input type="submit" value="Submit">
       </div>
     </form>
+
+    <form id="registration-form" method="POST" action="{{ route('updateResume', ['id' => $user->id]) }}" enctype="multipart/form-data">
+    <div class="form-group">
+      <label for="resume">Resume:</label>
+      <input type="file" id="resume" name="resume" required accept=".pdf,.doc,.docx">
+    </div>
+    <div class="form-group">
+      <input type="submit" value="Submit">
+    </div>
+    </form>
   </div>
 
     <!-- jQuery -->
