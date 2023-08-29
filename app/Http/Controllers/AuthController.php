@@ -11,6 +11,7 @@ use App\Models\Employer;
 
 class AuthController extends Controller
 {
+
     public function loginForm()
     {
         return view('auth.login');
@@ -47,7 +48,7 @@ class AuthController extends Controller
         $employer->location = $request->location;
         $employer->contactName = $request->contactName;
         $employer->email = $request->email;
-        $employer->password = $request->password;
+        $employer->password = Hash::make($request->password);
         $employer->phone = $request->phone;
         $employer->website = $request->website;
 
@@ -61,10 +62,10 @@ class AuthController extends Controller
     public function jobSeekerRegistration(Request $request)
     {
         if ($request->hasFile('resume')) {
-            $resumePath = $request->file('resume')->store('resumes');
+            $resumePath = $request->file('resume')->store('resumes', 'public');
         } else {
             $resumePath = "Resume is not attached";
-        }   
+        }
 
         $email = $request->email;
         
@@ -81,7 +82,7 @@ class AuthController extends Controller
         $jobSeeker->firstName = $request->firstName;
         $jobSeeker->lastName = $request->lastName;
         $jobSeeker->email = $request->email;
-        $jobSeeker->password = $request->password;
+        $jobSeeker->password = Hash::make($request->password);
         $jobSeeker->phone = $request->phone;
         $jobSeeker->address = $request->address;
         $jobSeeker->skills = $request->skills;
@@ -89,6 +90,8 @@ class AuthController extends Controller
         $jobSeeker->education = $request->education;
         $jobSeeker->resume_path = $resumePath;
         $jobSeeker->save();
+
+        
 
         // Redirect the user after successful registration
         return redirect('/login')->with('success', 'Registration completed successfully.');
@@ -105,7 +108,7 @@ class AuthController extends Controller
             {
                 $user = JobSeeker::where('email', $credentials['email'])->first();
 
-                if ($user && $user->password === $credentials['password']) {
+                if ($user && Hash::check($credentials['password'], $user->password)) {
                     // Authentication successful
                     Auth::guard('job_seeker')->login($user);
                     session([
@@ -122,15 +125,13 @@ class AuthController extends Controller
             }elseif($credentials['role']=="employer")
             {
                 $user = Employer::where('email', $credentials['email'])->first();
-
-                if ($user && $user->password === $credentials['password']) {
-                    // Authentication successful
+                
+                if ($user && Hash::check($credentials['password'], $user->password)) {
+                    // Authentication successful'
                     Auth::guard('employer')->login($user);
                     session([
                         'status' => 'true',
-                        'user_id' => $user->id,
-                        'user_name' => $user->companyName,
-                        'user_email' => $user->email,
+                        'role' => 'employer',
                     ]);
                     return redirect('/employer/dashboard');
                 }
@@ -147,8 +148,8 @@ class AuthController extends Controller
 
     public function logout()
     {
-        Auth::logout();
-        session(['status' => 'false']);
+        session()->flush(); // Clear all session data
+        auth()->logout();
         return redirect('/');
     }
 

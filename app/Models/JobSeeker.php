@@ -54,4 +54,10 @@ class JobSeeker extends Model implements Authenticatable
     {
         return null;
     }
+
+    public function applications()
+    {
+        return $this->hasMany(Application::class);
+    }
+
 }

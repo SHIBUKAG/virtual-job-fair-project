@@ -42,7 +42,7 @@
               </div>
         @endif
 
-        <div class="row row-cols-1 row-cols-md-3 g-4 mt-4">
+        <div class="row row-cols-1 row-cols-md-3 g-4 mt-4 mv-4">
             @foreach($postedJobs as $job)
             <div class="col">
                 <div class="card h-100">
@@ -53,10 +53,10 @@
                         <p class="card-text"><strong>Salary:</strong> {{ $job->salary }} {{ $job->salary_type }}</p>
                         @if ($job->status == 'active')
                         <a href="{{ route('edit_post', ['id' => $job->id]) }}" class="btn btn-primary">Manage</a>
-                        <a href="#" class="btn btn-secondary">View Applicants</a>
+                        <a href="{{ route('viewApplicant', ['id' => $job->id]) }}" class="btn btn-secondary">View Applicants</a>
                         <a href="{{ route('delete_post', ['id' => $job->id]) }}" class="btn btn-danger">Close</a>
                         @else
-                        <a href="#" class="btn btn-secondary">View Applicants</a>
+                        <a href="{{ route('viewApplicant', ['id' => $job->id]) }}" class="btn btn-secondary">View Applicants</a>
                         <a class="btn btn-danger">Closed Job</a>
                         @endif
                     </div>

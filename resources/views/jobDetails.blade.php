@@ -33,15 +33,30 @@
   
 
   <div class="container mt-4">
+    @if (Session::has('success'))
+            <div class="alert alert-success" role="alert">
+                <b><p>{{ Session::get('success') }}</p></b>
+              </div>
+        @endif
+        @if (Session::has('error'))
+            <div class="alert alert-warning" role="alert">
+                <b><p>{{ Session::get('error') }}</p></b>
+              </div>
+        @endif
     <div class="card">
         <div class="card-body">
             <h5 class="card-title">{{ $job->job_title }}</h5>
             <h6 class="card-subtitle mb-2 text-muted">{{ $job->company_name }}</h6>
             <p class="card-subtitle mb-2 text-muted"><b>Estimated Salary: </b>{{ $job->salary }} {{ $job->salary_type }}</p>
             <p class="card-subtitle mb-2 text-muted"><b>Location: </b>{{ $job->location }}</p>
-            <p class="card-text"><b>Job Type:</b> {{ $job->job_type }}</p>
-            
-            
+            <p class="card-text"><b>Job Type:</b>
+              @if ($job->job_type == 'full_time')
+                Full Time
+              @elseif ($job->job_type == 'part_time')
+                Part Time 
+              @else
+                Contract
+              @endif</p>
         </div>
     </div>
     <div class="card mt-4">
@@ -49,12 +64,17 @@
             <h6 class="card-subtitle mb-2 text-muted"><b>Description</b></h6>
             <p class="card-text">{{ $job->job_description }}</p>
             <p class="card-text mt-4"><b>Required Skills:</b> {{ $job->required_skills }}</p>
-            <a href="{{ route('viewJobs', ['id' => $job->id]) }}" class="btn btn-primary">Apply Now</a>
+            <a href="{{ route('applyJob', ['id' => $job->id]) }}" class="btn btn-primary">Apply Now</a>
+            <button class="btn btn-secondary" onclick="goBack()">Go Back</button>
         </div>
     </div>
   </div>
 
-
+  <script>
+    function goBack() {
+        window.history.back();
+    }
+  </script>
 
     <!-- jQuery -->
     <script src="{{ asset('js/jquery-2.1.0.min.js') }}"></script>

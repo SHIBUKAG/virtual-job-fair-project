@@ -35,7 +35,11 @@ Route::get('/contact', function(){
 
 //job_seeker routes
 Route::get('/jobs', [JobSeekerController::class, 'jobs'])->name('jobs');
+Route::get('/profile', [JobSeekerController::class, 'profile'])->name('profile');
 Route::get('/view_jobs/{id}', [JobSeekerController::class, 'viewJobs'])->name('viewJobs');
+Route::get('/applyJob/{id}', [JobSeekerController::class, 'applyJob'])->name('applyJob');
+Route::get('/appliedJobs',[JobSeekerController::class, 'appliedJobs'])->name('appliedJobs');
+Route::post('/jobSeekerUpdateProfile/{id}',[JobSeekerController::class, 'jobSeekerUpdateProfile'])->name('jobSeekerUpdateProfile');
 
 
 //employer routes 
@@ -47,14 +51,14 @@ Route::middleware(['auth:employer'])->group(function () {
     Route::post('/submit_job', [JobPostingController::class, 'store'])->name('store');
     Route::get('/employer/manage_posts', [JobPostingController::class, 'managePosts'])->name('employer.manage_posts');
     Route::get('/employer/edit_post/{id}', [JobPostingController::class, 'editPost'])->name('edit_post');
+    Route::get('/employer/viewApplicants/{id}', [JobPostingController::class, 'viewApplicant'])->name('viewApplicant');
+    Route::get('/employer/viewApplicantDetails/{id}', [JobPostingController::class, 'viewApplicantDetails'])->name('viewApplicantDetails');
     Route::put('/employer/update_post/{id}', [JobPostingController::class, 'updatePost'])->name('update_post');
     Route::get('/employer/delete_post/{id}', [JobPostingController::class, 'deletePost'])->name('delete_post');
 
 });
 
 
-
-Route::middleware(['web'])->group(function () {
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
     Route::get('/login', [AuthController::class, 'loginForm'])->name('loginForm');
@@ -65,7 +69,6 @@ Route::middleware(['web'])->group(function () {
 
     Route::get('/employerRegister', [AuthController::class, 'employerRegister'])->name('employerRegister');
     Route::post('/employerRegister', [AuthController::class, 'employerRegistration'])->name('employerRegistration');
-});
 
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

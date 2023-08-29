@@ -20,4 +20,10 @@ class JobPosting extends Model
         'status'
     ];
 
+    public function applications()
+    {
+        return $this->hasMany(Application::class);
+    }
+
+
 }

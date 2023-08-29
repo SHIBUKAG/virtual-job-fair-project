@@ -5,17 +5,19 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\JobPosting;
 use App\Models\Employer;
+use App\Models\JobSeeker;
+use App\Models\Application;
 use Illuminate\Support\Facades\Auth;
 
 class JobPostingController extends Controller
 {
+    
     public function showDashboard()
     {
         $user = Auth::user();
-        $employer = JobPosting::where('employer_id', $user->id)->get();
-        $jobCount = $employer->count();
 
-        return view('employer.dashboard', ['jobCount' => $jobCount]);
+
+        return view('employer.dashboard');
     }
 
     public function create()
@@ -112,6 +114,22 @@ class JobPostingController extends Controller
 
         return redirect()->route('employer.jobs')->with('success', 'Job posting closed successfully.');
     }
+
+    public function viewApplicant(Request $request, $id)
+    {
+        $jobPosting = JobPosting::findOrFail($id);
+        $applicants = Application::where('job_posting_id', $id)
+            ->with('jobSeeker') // Assuming you have a relationship defined in Application model
+            ->get();
+        return view('employer.viewApplicant', ['jobPosting' => $jobPosting, 'applicants' => $applicants]);
+    }
+
+    public function viewApplicantDetails(Request $request, $id)
+    {
+        $user = JobSeeker::findOrFail($id); // Replace 'User' with your actual model name
+        return view('employer.viewDetails', compact('user'));
+    }
+
 
 
 }

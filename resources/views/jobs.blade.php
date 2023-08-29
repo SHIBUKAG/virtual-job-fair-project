@@ -58,153 +58,8 @@
         <div class="container">
             <br>
             <br>
-
+            
             <div class="row">
-                <div class="col-lg-4">
-                    <form action="#">
-                         <h5 style="margin-bottom: 15px">Type</h5>
-
-                         <div>
-                              <label>
-                                   <input type="checkbox">
-
-                                   <span>Contract (5)</span>
-                              </label>
-                         </div>
-
-                         <div>
-                              <label>
-                                   <input type="checkbox">
-
-                                   <span>Full time (5)</span>
-                              </label>
-                         </div>
-
-                         <div>
-                              <label>
-                                   <input type="checkbox">
-
-                                   <span>Internship (5)</span>
-                              </label>
-                         </div>
-
-                         <br>
-
-                         <h5 style="margin-bottom: 15px">Category</h5>
-
-                         <div>
-                              <label>
-                                   <input type="checkbox">
-
-                                   <span>Accounting / Finance / Insurance Jobs (5)</span>
-                              </label>
-                         </div>
-
-                         <div>
-                              <label>
-                                   <input type="checkbox">
-
-                                   <span>Accounting / Finance / Insurance Jobs (5)</span>
-                              </label>
-                         </div>
-
-                         <div>
-                              <label>
-                                   <input type="checkbox">
-
-                                   <span>Accounting / Finance / Insurance Jobs (5)</span>
-                              </label>
-                         </div>
-
-                         <br>
-
-                         <h5 style="margin-bottom: 15px">Career levels</h5>
-
-                         <div>
-                              <label>
-                                   <input type="checkbox">
-
-                                   <span>Entry Level (5)</span>
-                              </label>
-                         </div>
-
-                         <div>
-                              <label>
-                                   <input type="checkbox">
-
-                                   <span>Entry Level (5)</span>
-                              </label>
-                         </div>
-
-                         <div>
-                              <label>
-                                   <input type="checkbox">
-
-                                   <span>Entry Level (5)</span>
-                              </label>
-                         </div>
-
-                         <br>
-
-                         <h5 style="margin-bottom: 15px">Education levels</h5>
-
-                         <div>
-                              <label>
-                                   <input type="checkbox">
-
-                                   <span>Associate Degree (5)</span>
-                              </label>
-                         </div>
-
-                         <div>
-                              <label>
-                                   <input type="checkbox">
-
-                                   <span>Associate Degree (5)</span>
-                              </label>
-                         </div>
-
-                         <div>
-                              <label>
-                                   <input type="checkbox">
-
-                                   <span>Associate Degree (5)</span>
-                              </label>
-                         </div>
-
-                         <br>
-
-
-                         <h5 style="margin-bottom: 15px">Years of experience</h5>
-
-                         <div>
-                              <label>
-                                   <input type="checkbox">
-
-                                    <span>&lt; 1 (5)</span>
-                              </label>
-                         </div>
-
-                         <div>
-                              <label>
-                                   <input type="checkbox">
-
-                                    <span>&lt; 1 (5)</span>
-                              </label>
-                         </div>
-
-                         <div>
-                              <label>
-                                   <input type="checkbox">
-
-                                    <span>&lt; 1 (5)</span>
-                              </label>
-                         </div>
-                    </form>
-                    
-                    <br>
-                </div>
-
                 <div class="col-lg-8">
                     <div class="row">
                          @foreach($postedJobs as $job)
@@ -231,7 +86,7 @@
 
             <br>
                 
-            <nav>
+            {{-- <nav>
               <ul class="pagination pagination-lg justify-content-center">
                 <li class="page-item">
                   <a class="page-link" href="#" aria-label="Previous">
@@ -249,7 +104,7 @@
                   </a>
                 </li>
               </ul>
-            </nav>
+            </nav> --}}
 
         </div>
     </section>

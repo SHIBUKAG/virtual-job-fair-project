@@ -10,11 +10,13 @@
                     <ul class="nav">
                         <li><a href="/" class="active">Home</a></li>
                         <li><a href="/jobs">Find Jobs</a></li>
-                        <li><a href="about">About Us</a></li>
-                        <li><a href="contact">Contact</a></li>
                         @if (session('status')=='true')
+                            <li><a href="/profile">Profile</a></li>
+                            <li><a href=" {{ route('appliedJobs') }}">Applied Jobs</a></li>
                             <li><a href="/logout">Logout</a></li>
                         @else
+                        <li><a href="about">About Us</a></li>
+                        <li><a href="contact">Contact</a></li>
                             <li><a href="/login">Login</a></li>
                             <li class="dropdown">
                                 <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Register</a>
