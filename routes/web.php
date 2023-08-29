@@ -63,7 +63,7 @@ Route::middleware(['auth:employer'])->group(function () {
 
 });
 
-
+Route::middleware(['web'])->group(function () {
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
     Route::get('/login', [AuthController::class, 'loginForm'])->name('loginForm');
@@ -74,8 +74,11 @@ Route::middleware(['auth:employer'])->group(function () {
 
     Route::get('/employerRegister', [AuthController::class, 'employerRegister'])->name('employerRegister');
     Route::post('/employerRegister', [AuthController::class, 'employerRegistration'])->name('employerRegistration');
+    Route::get('/verificationMail', [AuthController::class, 'verificationMail'])->name('verificationMail');
+    Route::post('/verificationMail', [AuthController::class, 'verifyMail'])->name('verifyMail');
 
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+});
+    
+Route::get('/verify-email', [AuthController::class, 'verifyEmail'])->name('verify.email');
 
 Route::get('/send-mail', [AuthController::class, 'sendMail'])->name('sendMail');

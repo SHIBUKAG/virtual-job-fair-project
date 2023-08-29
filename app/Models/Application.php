@@ -12,6 +12,7 @@ class Application extends Model
     protected $fillable = [
         'job_posting_id',
         'user_id',
+        'status',
     ];
 
     public function jobPosting()

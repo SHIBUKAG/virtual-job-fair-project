@@ -18,6 +18,7 @@ class Employer extends Model implements Authenticatable
         'contact_name',
         'email',
         'password',
+        'token',
         'phone',
         'website',
         'verified',

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('contactName');
             $table->string('email')->unique();
             $table->string('password');
+            $table->string('token');
             $table->string('phone');
             $table->string('website');
             $table->string('verified')->default('false');

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');  
             $table->unsignedBigInteger('job_posting_id'); 
+            $table->string('status')->default('applied');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('job_seekers')->onDelete('cascade');

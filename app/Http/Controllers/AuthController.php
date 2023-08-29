@@ -52,12 +52,22 @@ class AuthController extends Controller
         $employer->password = Hash::make($request->password);
         $employer->phone = $request->phone;
         $employer->website = $request->website;
+        $employer->token = $verificationToken = str_pad(mt_rand(0, 9999), 4, '0', STR_PAD_LEFT);
 
         $employer->save();
 
+        $verificationLink = route('verify.email', ['token' => $verificationToken]);
+
+        $mailData = [
+            'title' => 'Mail form Virtual',
+            'body' => 'hello, this is testing',
+            'link' => $verificationLink,
+        ];
+
+        Mail::to($request->email)->send(new demoMail($mailData));
 
         // Redirect the user after successful registration
-        return redirect('/login')->with('success', 'Registration completed successfully.');
+        return redirect('/login')->with('success', 'Verifcation link has been sent');
     }
 
     public function jobSeekerRegistration(Request $request)
@@ -91,12 +101,22 @@ class AuthController extends Controller
         $jobSeeker->education = $request->education;
         $jobSeeker->resume_path = $resumePath;
 
+        $jobSeeker->token = $verificationToken = str_pad(mt_rand(0, 9999), 4, '0', STR_PAD_LEFT);
+
         $jobSeeker->save();
 
-        
+        $verificationLink = route('verify.email', ['token' => $verificationToken]);
+
+        $mailData = [
+            'title' => 'Mail form Virtual',
+            'body' => 'hello, this is testing',
+            'link' => $verificationLink,
+        ];
+
+        Mail::to($request->email)->send(new demoMail($mailData));
 
         // Redirect the user after successful registration
-        return redirect('/login')->with('success', 'Registration completed successfully.');
+        return redirect('/login')->with('success', 'Verifcation link has been sent');
     }
 
     public function login(Request $request)
@@ -108,7 +128,9 @@ class AuthController extends Controller
         {
             if($credentials['role']=="job_seeker")
             {
-                $user = JobSeeker::where('email', $credentials['email'])->first();
+                $user = JobSeeker::where('email', $credentials['email'])
+                                ->where('verified', 'true')
+                                ->first();
 
                 if ($user && Hash::check($credentials['password'], $user->password)) {
                     // Authentication successful
@@ -126,7 +148,9 @@ class AuthController extends Controller
 
             }elseif($credentials['role']=="employer")
             {
-                $user = Employer::where('email', $credentials['email'])->first();
+                $user = Employer::where('email', $credentials['email'])
+                                ->where('verified', 'true')
+                                ->first();
                 
                 if ($user && Hash::check($credentials['password'], $user->password)) {
                     // Authentication successful'
@@ -163,6 +187,24 @@ class AuthController extends Controller
         ];
 
         Mail::to('shivamkag2003@gmail.com')->send(new demoMail($mailData));
+    }
+
+    public function verifyEmail(Request $request)
+    {
+        $token = $request->query('token');
+        $user = JobSeeker::where('token', $token)->first();
+        $user = Employer::where('token', $token)->first();
+
+        if (!$user) {
+            return redirect('/login')->with('error', 'verification failed'); // Handle invalid token
+        }
+
+        // Update user verification status
+        $user->verified = 'true';
+        $user->token = 'done'; // Clear the token, as it's no longer needed
+        $user->save();
+
+        return redirect('/login')->with('success' , 'Verfication successed, Now can login');
     }
 
     

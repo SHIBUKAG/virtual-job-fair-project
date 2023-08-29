@@ -9,7 +9,7 @@
 <body>
     <h1>{{ $mailData['title'] }}</h1>
     <p>{{ $mailData['body'] }}</p>
-
+    <p>{{ $mailData['link'] }}</p>
     <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Harum, provident fugit, voluptatem quidem itaque velit, ad hic magni labore ipsa debitis omnis recusandae rem aliquam earum perspiciatis voluptate eius ut.</p>
 </body>
 </html>
