@@ -45,7 +45,17 @@
       </div>
   </section>
 
-  <div class="container">
+  <div class="container mt-4">
+    @if (Session::has('success'))
+            <div class="alert alert-success" role="alert">
+                <b><p>{{ Session::get('success') }}</p></b>
+              </div>
+        @endif
+        @if (Session::has('error'))
+            <div class="alert alert-warning" role="alert">
+                <b><p>{{ Session::get('error') }}</p></b>
+              </div>
+        @endif
     <table class="table table-striped mt-4">
         <thead>
           <tr>
@@ -90,8 +100,8 @@
   <div class="user-details">
     <div class="user-info">
         <a href="#" class="btn btn-secondary">Chat</a>
-        <a href="#" class="btn btn-success">Hire</a>
-        <a href="#" class="btn btn-danger">Reject</a>
+        <a href="{{ route('hire', ['id' => $user->id, 'aid' => $applicantion_id ]) }}" class="btn btn-success">Hire</a>
+        <a href="{{ route('reject', ['id' => $user->id, 'aid' => $applicantion_id]) }}" class="btn btn-danger">Reject</a>
     </div>
 </div>
     <!-- jQuery -->

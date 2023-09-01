@@ -21,17 +21,13 @@ Route::get('/', function () {
     return view('index');
 });
 
-Route::get('/jobs', function(){
-    return view('jobs');
-});
-
-Route::get('/about', function(){
-    return view('about');
-});
 
 Route::get('/contact', function(){
     return view('contact');
 });
+
+Route::get('/jobs', [JobSeekerController::class, 'jobs'])->name('jobs');
+Route::get('/view_jobs/{id}', [JobSeekerController::class, 'viewJobs'])->name('viewJobs');
 
 //job_seeker routes
 Route::middleware(['auth:job_seeker'])->group(function () {
@@ -41,11 +37,7 @@ Route::middleware(['auth:job_seeker'])->group(function () {
     Route::get('/appliedJobs',[JobSeekerController::class, 'appliedJobs'])->name('appliedJobs');
     Route::post('/jobSeekerUpdateProfile/{id}',[JobSeekerController::class, 'jobSeekerUpdateProfile'])->name('jobSeekerUpdateProfile');
     Route::post('/updateResume/{id}',[JobSeekerController::class, 'updateResume'])->name('updateResume');
-
 });
-
-Route::get('/jobs', [JobSeekerController::class, 'jobs'])->name('jobs');
-Route::get('/view_jobs/{id}', [JobSeekerController::class, 'viewJobs'])->name('viewJobs');
 
 //employer routes 
 Route::middleware(['auth:employer'])->group(function () {
@@ -60,6 +52,8 @@ Route::middleware(['auth:employer'])->group(function () {
     Route::get('/employer/viewApplicantDetails/{id}', [JobPostingController::class, 'viewApplicantDetails'])->name('viewApplicantDetails');
     Route::put('/employer/update_post/{id}', [JobPostingController::class, 'updatePost'])->name('update_post');
     Route::get('/employer/delete_post/{id}', [JobPostingController::class, 'deletePost'])->name('delete_post');
+    Route::get('/hireApplicant/{id}',[JobPostingController::class, 'hireApplicant'])->name('hire');
+    Route::get('/rejectApplicant/{id}',[JobPostingController::class, 'rejectApplicant'])->name('reject');
 
 });
 

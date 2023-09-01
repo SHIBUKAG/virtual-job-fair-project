@@ -126,10 +126,53 @@ class JobPostingController extends Controller
 
     public function viewApplicantDetails(Request $request, $id)
     {
-        $user = JobSeeker::findOrFail($id); // Replace 'User' with your actual model name
-        return view('employer.viewDetails', compact('user'));
+        $user = JobSeeker::findOrFail($id);
+        $applicantion_id = $request->aid;
+        return view('employer.viewDetails', compact('user','applicantion_id'));
+        
     }
 
+    public function hireApplicant(Request $request, $id)
+    {
+       $user_id = $id;
+       $applicantion_id = $request->aid;
+
+       $application = Application::where('id', $applicantion_id)
+        ->where('user_id', $user_id)
+        ->first();
+
+        if ($application) {
+            $application->status = 'Hired';
+            $application->save();
+    
+            return redirect()->back()->with('success', 'Applicant hired successfully.');
+        } else {
+            return redirect()->back()->withErrors(['error' => 'Invalid application data.']);
+        }
+
+
+    }
+
+    public function rejectApplicant(Request $request, $id)
+    {
+       $user_id = $id;
+       $applicantion_id = $request->aid;
+
+       $application = Application::where('id', $applicantion_id)
+        ->where('user_id', $user_id)
+        ->first();
+
+        if ($application) {
+            $application->status = 'Rejected';
+            $application->save();
+    
+            return redirect()->back()->with('success', 'Applicant rejected successfully.');
+        } else {
+            return redirect()->back()->withErrors(['error' => 'Invalid application data.']);
+        }
+
+
+    }
 
 
 }

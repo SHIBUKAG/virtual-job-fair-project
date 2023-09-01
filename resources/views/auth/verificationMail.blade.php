@@ -31,16 +31,6 @@
 
     @include('layout.nav')
 
-    <div class="container mr-6">
-    <form action="{{ route('verifyMail') }}" method="POST">
-        <div class="mb-3">
-          <label for="exampleInputEmail1" class="form-label">Enter OTP</label>
-          <input type="text" class="form-control" id="exampleInputEmail1" name="otp" aria-describedby="emailHelp">
-          <input type="hidden" class="form-control" id="exampleInputEmail1" value="" name="token" aria-describedby="emailHelp">
-        </div>
-        <input type="submit" class="btn btn-primary" value="Verify">
-      </form>
-    </div>
     <!-- jQuery -->
     <script src="{{ asset('js/jquery-2.1.0.min.js') }}"></script>
 

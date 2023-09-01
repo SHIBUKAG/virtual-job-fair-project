@@ -4,7 +4,7 @@
           <div class="col-12">
               <nav class="main-nav">
                   <!-- ***** Logo Start ***** -->
-                  <a href="/" class="logo">VirtualCareer<em> Expo</em></a>
+                  <a href="/employer/dashboard" class="logo">VirtualCareer<em> Expo</em></a>
                   <!-- ***** Logo End ***** -->
                   <!-- ***** Menu Start ***** -->
                   <ul class="nav">

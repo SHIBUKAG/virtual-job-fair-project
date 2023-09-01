@@ -16,6 +16,7 @@ class JobSeeker extends Model implements Authenticatable
         'lastName',
         'email',
         'password',
+        'token',
         'phone',
         'address',
         'skills',

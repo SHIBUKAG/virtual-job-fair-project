@@ -33,6 +33,17 @@
   </section>
 
   <div class="container mt-4">
+    @if (Session::has('success'))
+            <div class="alert alert-success" role="alert">
+                <b><p>{{ Session::get('success') }}</p></b>
+              </div>
+        @endif
+        @if (Session::has('error'))
+            <div class="alert alert-warning" role="alert">
+                <b><p>{{ Session::get('error') }}</p></b>
+              </div>
+        @endif
+              
     <h1>Applicants for Job: {{ $jobPosting->job_title }}</h1>
 
     <table class="table table-striped">
@@ -50,7 +61,7 @@
             <td>{{ $application->jobSeeker->firstName }} {{ $application->jobSeeker->lastName }}</td>
             <td>{{ $application->jobSeeker->email }}</td>
             <td>{{ $application->created_at }}</td>
-            <td><a href="{{ route('viewApplicantDetails',['id' => $application->jobSeeker->id]) }}" class="btn btn-secondary">View Details</a></td>
+            <td><a href="{{ route('viewApplicantDetails', ['id' => $application->jobSeeker->id, 'aid' => $application->id]) }}" class="btn btn-secondary">View Details</a></td>
           </tr>
           @endforeach
         </tbody>

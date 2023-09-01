@@ -59,8 +59,7 @@ class AuthController extends Controller
         $verificationLink = route('verify.email', ['token' => $verificationToken]);
 
         $mailData = [
-            'title' => 'Mail form Virtual',
-            'body' => 'hello, this is testing',
+            'title' => 'Email Verification for VirtualCareerExpo',
             'link' => $verificationLink,
         ];
 
@@ -108,8 +107,7 @@ class AuthController extends Controller
         $verificationLink = route('verify.email', ['token' => $verificationToken]);
 
         $mailData = [
-            'title' => 'Mail form Virtual',
-            'body' => 'hello, this is testing',
+            'title' => 'Email Verification for VirtualCareerExpo',
             'link' => $verificationLink,
         ];
 
@@ -192,19 +190,27 @@ class AuthController extends Controller
     public function verifyEmail(Request $request)
     {
         $token = $request->query('token');
-        $user = JobSeeker::where('token', $token)->first();
-        $user = Employer::where('token', $token)->first();
-
-        if (!$user) {
-            return redirect('/login')->with('error', 'verification failed'); // Handle invalid token
+        $jobSeeker = JobSeeker::where('token', $token)->first();
+        $employer = Employer::where('token', $token)->first();
+    
+        if ($jobSeeker) {
+            // Update job seeker verification status
+            $jobSeeker->verified = 'true';
+            $jobSeeker->token = 'done';
+            $jobSeeker->save();
+    
+            return redirect('/login')->with('success', 'Verification successful. You can now log in.');
+        } elseif ($employer) {
+            // Update employer verification status
+            $employer->verified = 'true';
+            $employer->token = 'done';
+            $employer->save();
+    
+            return redirect('/login')->with('success', 'Verification successful. You can now log in.');
         }
-
-        // Update user verification status
-        $user->verified = 'true';
-        $user->token = 'done'; // Clear the token, as it's no longer needed
-        $user->save();
-
-        return redirect('/login')->with('success' , 'Verfication successed, Now can login');
+    
+        return redirect('/login')->with('error', 'Verification failed. Invalid token.');
+    
     }
 
     
