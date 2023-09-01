@@ -49,7 +49,13 @@
                     <h5 class="card-title">{{ $application->jobPosting->job_title }}</h5>
                     <p class="card-text">Company : {{ $application->jobPosting->company_name }}</p>
                     <p class="card-text"><strong>Location : </strong> {{ $application->jobPosting->location }}</p>
-                    <a href="#" class="btn btn-primary">Status : Applied </a>
+                    @if ($application->status == "Hired")
+                        <a href="#" class="btn btn-success">Status : {{ $application->status }} </a>
+                    @elseif ($application->status == "Rejected")
+                        <a href="#" class="btn btn-danger">Status : {{ $application->status }} </a>
+                    @else
+                        <a href="#" class="btn btn-primary">Status : {{ $application->status }} </a>
+                    @endif
                     <a href="{{ route('viewJobs', ['id' => $application->job_posting_id]) }}" class="btn btn-secondary">View Details</a>
                 </div>
             </div>

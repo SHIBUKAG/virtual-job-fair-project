@@ -8,6 +8,7 @@ use App\Mail\demoMail;
 use Illuminate\Http\Request;
 use App\Models\JobSeeker;
 use App\Models\Employer;
+use App\Models\Admin;
 
 
 class AuthController extends Controller
@@ -164,6 +165,13 @@ class AuthController extends Controller
                 return redirect()->back()->withErrors([
                     'login' => 'Invalid email or password.',
                 ]);
+            }else{
+                $user = Admin::where('email', $credentials['email'])->first();
+
+                if ($user && Hash::check($credentials['password'], $user->password)){
+                    Auth::guard('admin')->login($user);
+                    return redirect('/admin/dashboard');
+                }
             }
         }
     }

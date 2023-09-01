@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\JobPostingController;
 use App\Http\Controllers\JobSeekerController;
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -37,6 +38,19 @@ Route::middleware(['auth:job_seeker'])->group(function () {
     Route::get('/appliedJobs',[JobSeekerController::class, 'appliedJobs'])->name('appliedJobs');
     Route::post('/jobSeekerUpdateProfile/{id}',[JobSeekerController::class, 'jobSeekerUpdateProfile'])->name('jobSeekerUpdateProfile');
     Route::post('/updateResume/{id}',[JobSeekerController::class, 'updateResume'])->name('updateResume');
+});
+
+Route::middleware(['auth:admin'])->group(function () {
+    Route::get('/admin/dashboard', [AdminController::class, 'adminDashboard'])->name('adminDashboard');
+    Route::get('/manage_posts', [AdminController::class, 'managePosts'])->name('managePosts');
+    Route::get('/manage_users', [AdminController::class, 'manageUsers'])->name('manageUsers');
+    Route::get('/disableJobs', [AdminController::class, 'disableJobs'])->name('disableJobs');
+    Route::get('/disableEmp', [AdminController::class, 'disableEmp'])->name('disableEmp');
+    Route::get('/activeJobs', [AdminController::class, 'activeJobs'])->name('activeJobs');
+    Route::get('/activeEmp', [AdminController::class, 'activeEmp'])->name('activeEmp');
+    Route::get('/activePosts', [AdminController::class, 'activePosts'])->name('activePosts');
+    Route::get('/disablePosts', [AdminController::class, 'disablePosts'])->name('disablePosts');
+    
 });
 
 //employer routes 

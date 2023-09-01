@@ -112,6 +112,7 @@
                         <select id="role" name="role" required>
                             <option value="job_seeker" >Job Seeker</option>
                             <option value="employer">Employer</option>
+                            <option value="admin">Admin</option>
                         </select>
                         @error('role')
                             <span class="error-message">{{ $message }}</span>
