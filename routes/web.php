@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\JobPostingController;
 use App\Http\Controllers\JobSeekerController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ChatMessageController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -66,8 +67,11 @@ Route::middleware(['auth:employer'])->group(function () {
     Route::get('/employer/viewApplicantDetails/{id}', [JobPostingController::class, 'viewApplicantDetails'])->name('viewApplicantDetails');
     Route::put('/employer/update_post/{id}', [JobPostingController::class, 'updatePost'])->name('update_post');
     Route::get('/employer/delete_post/{id}', [JobPostingController::class, 'deletePost'])->name('delete_post');
-    Route::get('/hireApplicant/{id}',[JobPostingController::class, 'hireApplicant'])->name('hire');
-    Route::get('/rejectApplicant/{id}',[JobPostingController::class, 'rejectApplicant'])->name('reject');
+    Route::get('/hireApplicant/{id}', [JobPostingController::class, 'hireApplicant'])->name('hire');
+    Route::get('/rejectApplicant/{id}', [JobPostingController::class, 'rejectApplicant'])->name('reject');
+    Route::get('/chat/{id}', [ChatMessageController::class, 'showChats'])->name('showChats');
+    Route::get('/chat', [ChatMessageController::class, 'reChats'])->name('reChats');
+    Route::post('/sendchatEmp', [ChatMessageController::class, 'sendchatEmp'])->name('sendchatEmp');
 
 });
 

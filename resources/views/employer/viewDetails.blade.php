@@ -99,7 +99,7 @@
   </div>
   <div class="user-details">
     <div class="user-info">
-        <a href="#" class="btn btn-secondary">Chat</a>
+        <a href=" {{ route('showChats', ['id' => $user->id, 'aid' => $applicantion_id ]) }}" class="btn btn-secondary">Chat</a>
         <a href="{{ route('hire', ['id' => $user->id, 'aid' => $applicantion_id ]) }}" class="btn btn-success">Hire</a>
         <a href="{{ route('reject', ['id' => $user->id, 'aid' => $applicantion_id]) }}" class="btn btn-danger">Reject</a>
     </div>
