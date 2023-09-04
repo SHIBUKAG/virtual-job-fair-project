@@ -13,7 +13,11 @@ class AdminController extends Controller
 {
     protected function adminDashboard()
     {
-        return view('admin.dashboard');
+        $JobSeekers = JobSeeker::all()->count();
+        $Employers = Employer::all()->count();
+        $JobPostings = JobPosting::all()->count();
+        $Applicants = Application::all()->count();
+        return view('admin.dashboard', compact('JobSeekers', 'Employers', 'JobPostings', 'Applicants'));
     }
 
     protected function managePosts()

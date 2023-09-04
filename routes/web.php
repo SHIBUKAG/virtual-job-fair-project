@@ -39,6 +39,7 @@ Route::middleware(['auth:job_seeker'])->group(function () {
     Route::get('/appliedJobs',[JobSeekerController::class, 'appliedJobs'])->name('appliedJobs');
     Route::post('/jobSeekerUpdateProfile/{id}',[JobSeekerController::class, 'jobSeekerUpdateProfile'])->name('jobSeekerUpdateProfile');
     Route::post('/updateResume/{id}',[JobSeekerController::class, 'updateResume'])->name('updateResume');
+    Route::get('/showMessage/{aid}/{eid}', [ChatMessageController::class, 'showMessage'])->name('showMessage');
 });
 
 Route::middleware(['auth:admin'])->group(function () {

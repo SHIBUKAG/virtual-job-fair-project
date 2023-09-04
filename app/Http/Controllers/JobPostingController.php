@@ -14,10 +14,15 @@ class JobPostingController extends Controller
     
     public function showDashboard()
     {
-        $user = Auth::user();
+        $user = Auth::guard('employer')->user();
+        $jobPostingCount = JobPosting::where('employer_id', $user->id)->count();
+
+        $applicantCount = Application::join('job_postings', 'applications.job_posting_id', '=', 'job_postings.id')
+                            ->where('job_postings.employer_id', $user->id)
+                            ->count();
 
 
-        return view('employer.dashboard');
+        return view('employer.dashboard', compact('jobPostingCount','applicantCount'));
     }
 
     public function create()

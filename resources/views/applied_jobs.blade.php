@@ -57,6 +57,7 @@
                         <a href="#" class="btn btn-primary">Status : {{ $application->status }} </a>
                     @endif
                     <a href="{{ route('viewJobs', ['id' => $application->job_posting_id]) }}" class="btn btn-secondary">View Details</a>
+                    <a href="{{ route('showMessage', ['aid' => $application->id, 'eid' =>$application->jobPosting->employer_id]) }}" class="btn btn-secondary mt-2">Message</a>
                 </div>
             </div>
         </div>

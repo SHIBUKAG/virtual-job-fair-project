@@ -60,7 +60,7 @@
             <br>
             
             <div class="row">
-                <div class="col-lg-8">
+                <div class="col">
                     <div class="row">
                          @foreach($postedJobs as $job)
                         <div class="col-md-6">

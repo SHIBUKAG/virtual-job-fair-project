@@ -67,4 +67,20 @@ class ChatMessageController extends Controller
         session(['chat_messages' => $chats]);
         return view('employer.chat');
     }
+
+    public function showMessage(Request $request)
+    {
+        $eid = $request->eid;
+        $aid = $request->aid;
+
+        $jobseeker = Auth::guard('job_seeker')->user();
+
+        $chats = Chat::where('jobseeker_id', $jobseeker->id)
+        ->where('application_id', $aid)
+        ->where('employer_id', $eid)
+        ->get();
+
+        return view('showMessages', compact('chats'));
+
+    }
 }

@@ -32,7 +32,28 @@
       </div>
   </section>
 
+  <div class="container mt-4">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Total Job Posted</h5>
+                    <h3>{{ $jobPostingCount }}</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Total Applicants</h5>
+                    <h3>{{ $applicantCount }}</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
+  
 
     <!-- jQuery -->
     <script src="{{ asset('js/jquery-2.1.0.min.js') }}"></script>
