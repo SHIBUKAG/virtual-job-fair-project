@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Mail;
 use App\Mail\demoMail;
+use App\Mail\resetLink;
 use Illuminate\Http\Request;
 use App\Models\JobSeeker;
 use App\Models\Employer;
@@ -219,6 +220,107 @@ class AuthController extends Controller
     
         return redirect('/login')->with('error', 'Verification failed. Invalid token.');
     
+    }
+
+    public function forgetPassword()
+    {
+        return view('auth.reset');
+    }
+
+    public function sendResetLink(Request $request)
+    {
+        $email = $request->email;
+        $role = $request->role;
+
+        if($role == "job_seeker")
+        {
+            $user = JobSeeker::where('email', $email)->first();
+            if(!$user)
+            {
+                return redirect()->back()->with('error', "Email does not exist in records, please enter valid email.");
+            }
+
+            $user->token = $resetToken = str_pad(mt_rand(0, 9999), 4, '0', STR_PAD_LEFT);
+            $user->save();
+
+            $verificationLink = route('resetPassword', ['token' => $resetToken]);
+
+            $mailData = [
+                'title' => 'Password Reset Link',
+                'link' => $verificationLink,
+            ];
+
+            Mail::to($request->email)->send(new resetLink($mailData));
+
+            return redirect('/login')->with('success', 'Reset link has been sent');
+
+        }elseif($role == "employer")
+        {
+            $user = Employer::where('email', $email)->first();
+            if(!$user)
+            {
+                return redirect()->back()->with('error', "Email does not exist in records, please enter valid email.");
+            }
+
+            $user->token = $resetToken = str_pad(mt_rand(0, 9999), 4, '0', STR_PAD_LEFT);
+            $user->save();
+
+            $verificationLink = route('resetPassword', ['token' => $resetToken]);
+
+            $mailData = [
+                'title' => 'Password Reset Link',
+                'link' => $verificationLink,
+            ];
+
+            Mail::to($request->email)->send(new resetLink($mailData));
+
+            return redirect('/login')->with('success', 'Reset link has been sent');
+        }else{
+
+        }
+    }
+
+    public function resetPassword(Request $request)
+    {
+        $token = $request->query('token');
+        $jobSeeker = JobSeeker::where('token', $token)->first();
+        $employer = Employer::where('token', $token)->first();
+
+        if($jobSeeker)
+        {
+            return view('auth.resetPass', compact('token'));
+        }
+        if($employer)
+        {
+            return view('auth.resetPass', compact('token'));
+        }
+    }
+
+    public function reset(Request $request)
+    {
+        $token = $request->token;
+        $pass = $request->password;
+
+        $jobSeeker = JobSeeker::where('token', $token)->first();
+        $employer = Employer::where('token', $token)->first();
+
+        if($jobSeeker)
+        {
+            $jobSeeker->password = Hash::make($pass);
+            $jobSeeker->token = 'done';
+            $jobSeeker->save();
+            return redirect('/login')->with('success', 'Password reset successfully.');
+        }
+        if($employer)
+        {
+            $employer->password = Hash::make($pass);
+            $employer->token = 'done';
+            $employer->save();
+            return redirect('/login')->with('success', 'Password reset successfully.');
+        }
+        return redirect('/login')->with('error', 'Password reset failed.');
+
+
     }
 
     

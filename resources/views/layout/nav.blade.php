@@ -18,7 +18,7 @@
                         <li><a href="contact">Contact</a></li>
                             <li><a href="/login">Login</a></li>
                             <li class="dropdown">
-                                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Register</a>
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="jobSeekerRegister" role="button" aria-haspopup="true" aria-expanded="false" >Register</a>
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item" href="jobSeekerRegister">As Job Seeker</a>
                                     <a class="dropdown-item" href="employerRegister">As Employer</a>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Login</title>
+  <title>Reset Password</title>
   <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet"> 
   <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}">
   <link rel="stylesheet" type="text/css" href="{{ asset('css/font-awesome.css')}}"> 
@@ -73,7 +73,7 @@
                     <div class="cta-content">
                         <br>
                         <br>
-                        <h2>LOGIN <em> FORM</em></h2>
+                        <h2>RESET <em> PASSWORD</em></h2>
                     </div>
                 </div>
             </div>
@@ -81,19 +81,14 @@
     </section>
 
     <div class="form-container mt-4">
-        @if (Session::has('success'))
-            <div class="alert-success mt-4">
-                <p>{{ Session::get('success') }}</p>
-            </div>
-        @endif
         @if (Session::has('error'))
-            <div class="alert alert-warning" role="alert">
+            <div class="alert alert-danger" role="alert">
                 <b><p>{{ Session::get('error') }}</p></b>
               </div>
         @endif
         
 
-                <form method="POST" action="/login">
+                <form method="POST" action="{{ route('sendResetLink') }}">
                     @csrf
             
                     <div class="form-group">
@@ -103,33 +98,19 @@
                             <span class="error-message">{{ $message }}</span>
                         @enderror
                     </div>
-            
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <input id="password" type="password" name="password" required>
-                        @error('password')
-                            <span class="error-message">{{ $message }}</span>
-                        @enderror
-                    </div>
-            
                     <div class="form-group">
                         <label for="role">Role</label>
                         <select id="role" name="role" required>
                             <option value="job_seeker" >Job Seeker</option>
                             <option value="employer">Employer</option>
-                            <option value="admin">Admin</option>
                         </select>
                         @error('role')
                             <span class="error-message">{{ $message }}</span>
                         @enderror
                     </div>
 
-                    <div class="password-reset-link">
-                        <a href="{{ route('forgetPassword') }}">Forgot Your Password?</a>
-                    </div>
-            
                     <div class="form-group mt-2">
-                        <button type="submit" class="submit-button">Login</button>
+                        <button type="submit" class="submit-button">Send Link</button>
                     </div>
 
                 </form>

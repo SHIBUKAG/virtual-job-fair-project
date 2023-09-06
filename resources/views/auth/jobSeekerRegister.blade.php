@@ -6,6 +6,8 @@
   <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}">
   <link rel="stylesheet" type="text/css" href="{{ asset('css/font-awesome.css')}}"> 
   <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+
   <style>
     .form-container {
       max-width: 500px;
@@ -82,43 +84,47 @@
       @csrf
       <div class="form-group">
         <label for="first-name">First Name:</label>
-        <input type="text" id="first-name" name="firstName" required>
+        <input type="text" id="first-name" name="firstName">
       </div>
       <div class="form-group">
         <label for="last-name">Last Name:</label>
-        <input type="text" id="last-name" name="lastName" required>
+        <input type="text" id="last-name" name="lastName">
       </div>
       <div class="form-group">
         <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
+        <input type="email" id="email" name="email" >
+        <small class="form-text text-muted">Please Enter valid email, Email verification will be done.</small>
       </div>
       <div class="form-group">
         <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
+        <input type="password" id="password" name="password" >
       </div>
       <div class="form-group">
         <label for="phone">Phone:</label>
-        <input type="text" id="phone" name="phone" required pattern="[0-9]{10}" title="Phone number must be 10 digits">
+        <input type="text" id="phone" name="phone" pattern="[0-9]{10}" title="Phone number must be 10 digits">
       </div>
       <div class="form-group">
         <label for="address">Address:</label>
-        <textarea id="address" name="address" required></textarea>
+        <textarea id="address" name="address" ></textarea>
       </div>
       <div class="form-group">
         <label for="skills">Skills:</label>
-        <input type="text" id="skills" name="skills" required>
+        <input type="text" id="skills" name="skills" >
+        <small class="form-text text-muted">Separate skills with commas (e.g. Java, Python, JavaScript)</small>
       </div>
       <div class="form-group">
         <label for="experience">Experience:</label>
-        <input type="text" id="experience" name="experience" required>
+        <input type="text" id="experience" name="experience" >
       </div>
       <div class="form-group">
         <label for="education">Education:</label>
-        <input type="text" id="education" name="education" required>
+        <input type="text" id="education" name="education">
       </div>
       <div class="form-group">
         <label for="resume">Resume:</label>
-        <input type="file" id="resume" name="resume" required accept=".pdf,.doc,.docx">
+        <input type="file" id="resume" name="resume" accept=".pdf,.doc,.docx">
+        <small class="form-text text-muted">Please choose valid format (e.g. .pdf,.doc.docx)</small>
+
       </div>
       <div class="form-group">
         <input type="submit" value="Submit">
@@ -233,11 +239,23 @@
 
             // Validate Resume
             const resumeInput = document.getElementById("resume");
-            if (resumeInput.value.trim() === "" || !resumeInput.files[0]) {
+            if (!resumeInput.files[0]) {
                 displayErrorMessage(resumeInput, "Resume is required.");
                 isValid = false;
                 if (!firstInvalidField) {
                     firstInvalidField = resumeInput;
+                }
+            } else {
+                const allowedExtensions = [".pdf", ".doc", ".docx"];
+                const fileName = resumeInput.files[0].name;
+                const fileExtension = fileName.slice(((fileName.lastIndexOf(".") - 1) >>> 0) + 2);
+
+                if (!allowedExtensions.includes("." + fileExtension.toLowerCase())) {
+                    displayErrorMessage(resumeInput, "Invalid file format. Allowed formats are PDF, DOC, and DOCX.");
+                    isValid = false;
+                    if (!firstInvalidField) {
+                        firstInvalidField = resumeInput;
+                    }
                 }
             }
 
