@@ -13,8 +13,9 @@
     <style>
         /* Style for the chat container */
         .chat-container {
-            max-width: 400px;
-            margin: 0 auto;
+            max-width: 100%;
+            margin-left: 40px;
+            margin-right: 40px;
             border: 1px solid #ccc;
             padding: 10px;
             border-radius: 5px;
@@ -57,7 +58,7 @@
   </head>
   <body>
     
-    @include('employer.nav_emp')
+    @include('layout.nav')
 
     <section class="section section-bg" id="call-to-action" style="background-image: url({{ asset('images/banner-image-1-1920x500.jpg') }})">
       <div class="container">
@@ -77,8 +78,8 @@
     <div class="">
         @if ($chats && $chats->count() > 0)
             @foreach ($chats as $message)
-                <div class="message mt-2">
-                    <b>{{ $message->message }}</b> <br> <em> {{ $message->created_at }}</em>
+                <div class="message mt-4">
+                    <p>{{ $message->message }}</p> <br> <em> {{ $message->created_at }}</em>
                 </div>
             @endforeach
         @else

@@ -91,7 +91,7 @@
     <input type="hidden" name="application_id">
     <input type="hidden" name="jobseeker_id" >
     <input type="hidden" name="employer_id">
-        <input type="text" class="message-input" name="message" placeholder="Type a message..." required>
+        <textarea class="message-input" name="message" placeholder="Type a message..."></textarea>
         <input type="submit" value="Send" class="message-input">
     </form>
 </div>
