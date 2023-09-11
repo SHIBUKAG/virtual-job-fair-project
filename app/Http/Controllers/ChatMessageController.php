@@ -9,6 +9,8 @@ use App\Models\JobSeeker;
 use App\Models\Application;
 use App\Models\Chat ;
 use Illuminate\Support\Facades\Auth;
+use Mail;
+use App\Mail\chatBoxMail;
 
 class ChatMessageController extends Controller
 {
@@ -45,6 +47,16 @@ class ChatMessageController extends Controller
         $sendchatEmp->message = $request->message;
         $sendchatEmp->save();
 
+        $user = JobSeeker::where('id', session('chat_ids.jobseeker_id'))->first();
+
+        $mailData = [
+            'title' => 'You have received new message in chatbox',
+        ];
+
+        Mail::to($user->email)->send(new chatBoxMail($mailData));
+
+
+
         session([
             'chat_ids.application_id' => $sendchatEmp->application_id,
             'chat_ids.jobseeker_id' => $sendchatEmp->jobseeker_id,
@@ -63,7 +75,6 @@ class ChatMessageController extends Controller
         ->where('employer_id', session('chat_ids.employer_id'))
         ->get();
     
-
         session(['chat_messages' => $chats]);
         return view('employer.chat');
     }

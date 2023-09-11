@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Mail;
+use App\Mail\JobApplyMail;
 use Illuminate\Http\Request;
 use App\Models\JobPosting;
 use App\Models\JobSeeker;
@@ -96,6 +98,16 @@ class JobSeekerController extends Controller
             // Other fields you might have
         ]);
         $application->save();
+
+        $jobInfo = JobPosting::where('id', $jobid)->first();
+        $jobTitle = $jobInfo->job_title;
+
+        $mailData = [
+            'title' => 'Your Job Application has been submitted!',
+            'jobtitle' => $jobTitle,
+        ];
+
+        Mail::to($user->email)->send(new JobApplyMail($mailData));
 
         return redirect()->route('viewJobs', ['id' => $jobid])->with('success', 'Application submitted successfully.');
 

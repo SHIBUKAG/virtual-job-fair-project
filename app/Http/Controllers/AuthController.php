@@ -33,11 +33,9 @@ class AuthController extends Controller
     {
         $email = $request->email;
 
-        // Check if the user already exists
         $existingUser = Employer::where('email', $email)->first();
 
         if ($existingUser) {
-            // User already exists, handle the error or redirect back with a message
             return redirect()->back()->withErrors(['email' => 'User with this email already exists.']);
         }
 
@@ -80,12 +78,9 @@ class AuthController extends Controller
         }
 
         $email = $request->email;
-        
-        // Check if the user already exists
         $existingUser = JobSeeker::where('email', $email)->first();
 
         if ($existingUser) {
-            // User already exists, handle the error or redirect back with a message
             return redirect()->back()->withErrors(['email' => 'User with this email already exists.']);
         }
 
@@ -115,7 +110,6 @@ class AuthController extends Controller
 
         Mail::to($request->email)->send(new demoMail($mailData));
 
-        // Redirect the user after successful registration
         return redirect('/login')->with('success', 'Verifcation link has been sent');
     }
 
@@ -133,7 +127,6 @@ class AuthController extends Controller
                                 ->first();
 
                 if ($user && Hash::check($credentials['password'], $user->password)) {
-                    // Authentication successful
                     Auth::guard('job_seeker')->login($user);
                     session([
                         'status' => 'true'
@@ -141,7 +134,6 @@ class AuthController extends Controller
                     return redirect('/');
                 }
 
-                // Authentication failed
                 return redirect()->back()->withErrors([
                     'login' => 'Invalid email or password.',
                 ]);
@@ -153,7 +145,6 @@ class AuthController extends Controller
                                 ->first();
                 
                 if ($user && Hash::check($credentials['password'], $user->password)) {
-                    // Authentication successful'
                     Auth::guard('employer')->login($user);
                     session([
                         'status' => 'true',
@@ -162,7 +153,6 @@ class AuthController extends Controller
                     return redirect('/employer/dashboard');
                 }
 
-                // Authentication failed
                 return redirect()->back()->withErrors([
                     'login' => 'Invalid email or password.',
                 ]);
@@ -181,7 +171,7 @@ class AuthController extends Controller
 
     public function logout()
     {
-        session()->flush(); // Clear all session data
+        session()->flush(); 
         auth()->logout();
         return redirect('/');
     }

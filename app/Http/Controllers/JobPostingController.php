@@ -8,6 +8,8 @@ use App\Models\Employer;
 use App\Models\JobSeeker;
 use App\Models\Application;
 use Illuminate\Support\Facades\Auth;
+use Mail;
+use App\Mail\statusChange;
 
 class JobPostingController extends Controller
 {
@@ -149,6 +151,17 @@ class JobPostingController extends Controller
         if ($application) {
             $application->status = 'Hired';
             $application->save();
+
+            $user = JobSeeker::where('id', $user_id)->first();
+
+            $mailData = [
+                'title' => 'Your application status has been changed!',
+                'jobtitle' => $application->jobPosting->job_title,
+                'status' => "Congratulations, You made it ",
+                'body' => "Your application status has been changed to Hired, which indicates that there has been a development in the hiring process.",
+            ];
+    
+            Mail::to($user->email)->send(new statusChange($mailData));
     
             return redirect()->back()->with('success', 'Applicant hired successfully.');
         } else {
@@ -170,6 +183,17 @@ class JobPostingController extends Controller
         if ($application) {
             $application->status = 'Rejected';
             $application->save();
+
+            $user = JobSeeker::where('id', $user_id)->first();
+
+            $mailData = [
+                'title' => 'Your application status has been changed!',
+                'jobtitle' => $application->jobPosting->job_title,
+                'status' => "Unfortunately, Employer did not select you for further considersation",
+                'body' => "Your application status has been changed to Rejected, which indicates that there has been a development in the hiring process.",
+            ];
+    
+            Mail::to($user->email)->send(new statusChange($mailData));
     
             return redirect()->back()->with('success', 'Applicant rejected successfully.');
         } else {

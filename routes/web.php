@@ -92,10 +92,10 @@ Route::middleware(['web'])->group(function () {
     Route::get('/forgetPassword', [AuthController::class, 'forgetPassword'])->name('forgetPassword');
     Route::post('/resetLink', [AuthController::class, 'sendResetLink'])->name('sendResetLink');
     Route::post('/reset', [AuthController::class, 'reset'])->name('reset');
-
+    Route::get('/verify-email', [AuthController::class, 'verifyEmail'])->name('verify.email');
+    Route::get('/resetPassword', [AuthController::class, 'resetPassword'])->name('resetPassword');
 });
     
-Route::get('/verify-email', [AuthController::class, 'verifyEmail'])->name('verify.email');
-Route::get('/resetPassword', [AuthController::class, 'resetPassword'])->name('resetPassword');
+
 
 Route::get('/send-mail', [AuthController::class, 'sendMail'])->name('sendMail');
