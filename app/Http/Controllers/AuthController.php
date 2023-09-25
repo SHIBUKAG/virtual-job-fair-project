@@ -131,12 +131,10 @@ class AuthController extends Controller
                     session([
                         'status' => 'true'
                     ]);
-                    return redirect('/');
+                    return redirect('/')->with('success', "Logged in successfully");
                 }
 
-                return redirect()->back()->withErrors([
-                    'login' => 'Invalid email or password.',
-                ]);
+                return redirect('/login')->with('error', 'Invalid Credentials or Role');
 
             }elseif($credentials['role']=="employer")
             {
@@ -150,19 +148,20 @@ class AuthController extends Controller
                         'status' => 'true',
                         'role' => 'employer',
                     ]);
-                    return redirect('/employer/dashboard');
+                    return redirect('/employer/dashboard')->with('success', "Logged in successfully");
                 }
 
-                return redirect()->back()->withErrors([
-                    'login' => 'Invalid email or password.',
-                ]);
+                return redirect('/login')->with('error', 'Invalid Role and Credentials');
+
             }else{
                 $user = Admin::where('email', $credentials['email'])->first();
 
                 if ($user && Hash::check($credentials['password'], $user->password)){
                     Auth::guard('admin')->login($user);
-                    return redirect('/admin/dashboard');
+                    return redirect('/admin/dashboard')->with('success', "Logged in successfully");
                 }
+
+                return redirect('login')->with('error', 'Invalid Role and Credentials');
             }
         }
     }

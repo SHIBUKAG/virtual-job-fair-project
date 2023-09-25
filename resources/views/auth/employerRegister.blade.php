@@ -74,35 +74,35 @@
           @csrf
           <div class="form-group">
             <label for="company-name">Company Name:</label>
-            <input type="text" id="company-name" name="companyName" required>
+            <input type="text" id="company-name" name="companyName">
           </div>
           <div class="form-group">
             <label for="industry">Industry:</label>
-            <input type="text" id="industry" name="industry" required>
+            <input type="text" id="industry" name="industry" >
           </div>
           <div class="form-group">
             <label for="location">Location:</label>
-            <input type="text" id="location" name="location" required>
+            <input type="text" id="location" name="location" >
           </div>
           <div class="form-group">
             <label for="contact-name">Contact Name:</label>
-            <input type="text" id="contact-name" name="contactName" required>
+            <input type="text" id="contact-name" name="contactName" >
           </div>
           <div class="form-group">
             <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
+            <input type="email" id="email" name="email" >
           </div>
           <div class="form-group">
             <label for="phone">Phone:</label>
-            <input type="text" id="phone" name="phone" required>
+            <input type="text" id="phone" name="phone" >
           </div>
           <div class="form-group">
             <label for="website">Website:</label>
-            <input type="text" id="website" name="website" required>
+            <input type="text" id="website" name="website" >
           </div>
           <div class="form-group">
             <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
+            <input type="password" id="password" name="password">
           </div>
           <div class="form-group">
             <input type="submit" value="Submit">

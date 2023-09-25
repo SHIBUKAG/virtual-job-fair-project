@@ -45,7 +45,6 @@
                         <br>
                         <br>
                         <h2>Our <em>Jobs</em></h2>
-                        <p>Ut consectetur, metus sit amet aliquet placerat, enim est ultricies ligula</p>
                     </div>
                 </div>
             </div>

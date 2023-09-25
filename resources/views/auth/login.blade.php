@@ -87,41 +87,32 @@
             </div>
         @endif
         @if (Session::has('error'))
-            <div class="alert alert-warning" role="alert">
+            <div class="alert alert-danger" role="alert">
                 <b><p>{{ Session::get('error') }}</p></b>
               </div>
         @endif
         
 
-                <form method="POST" action="/login">
+                <form method="POST" action="/login" id="login-form">
                     @csrf
             
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus>
-                        @error('email')
-                            <span class="error-message">{{ $message }}</span>
-                        @enderror
+                        <input id="email" type="email" name="email" value="{{ old('email') }}">
                     </div>
             
                     <div class="form-group">
                         <label for="password">Password</label>
-                        <input id="password" type="password" name="password" required>
-                        @error('password')
-                            <span class="error-message">{{ $message }}</span>
-                        @enderror
+                        <input id="password" type="password" name="password">
                     </div>
             
                     <div class="form-group">
                         <label for="role">Role</label>
-                        <select id="role" name="role" required>
+                        <select id="role" name="role">
                             <option value="job_seeker" >Job Seeker</option>
                             <option value="employer">Employer</option>
                             <option value="admin">Admin</option>
                         </select>
-                        @error('role')
-                            <span class="error-message">{{ $message }}</span>
-                        @enderror
                     </div>
 
                     <div class="password-reset-link">
@@ -133,48 +124,50 @@
                     </div>
 
                 </form>
+                <script>
+                
+                    document.getElementById('login-form').addEventListener('submit', function (event) {
+                        // Prevent the form from submitting if client-side validation fails
+                        if (!validateForm()) {
+                            event.preventDefault();
+                        }
+                    });
+                
+                    function validateForm() {
+                        let isValid = true;
+                        const emailInput = document.getElementById('email');
+                        const passwordInput = document.getElementById('password');
+                
+                        // Check if email and password fields are empty
+                        if (emailInput.value.trim() === '') {
+                            isValid = false;
+                            displayErrorMessage(emailInput, 'Email is required.');
+                        }
+                
+                        if (passwordInput.value.trim() === '') {
+                            isValid = false;
+                            displayErrorMessage(passwordInput, 'Password is required.');
+                        }
+                
+                        return isValid;
+                    }
+                
+                    function displayErrorMessage(inputElement, message) {
+                        const errorSpan = inputElement.nextElementSibling;
+                        if (errorSpan && errorSpan.classList.contains('error-message')) {
+                            errorSpan.textContent = message;
+                        } else {
+                            const errorMessage = document.createElement('span');
+                            errorMessage.classList.add('error-message');
+                            errorMessage.textContent = message;
+                            inputElement.parentNode.appendChild(errorMessage);
+                        }
+                    }
+                </script>
             </div>
         </div>
+        
 </body>
 </html> 
 
-<script>
-    // Client-side validations
-    document.getElementById('email').addEventListener('input', function() {
-        this.setCustomValidity('');
-    });
 
-    document.getElementById('password').addEventListener('input', function() {
-        this.setCustomValidity('');
-    });
-
-    document.getElementById('role').addEventListener('change', function() {
-        this.setCustomValidity('');
-    });
-
-    document.querySelector('form').addEventListener('submit', function(event) {
-        var emailInput = document.getElementById('email');
-        var passwordInput = document.getElementById('password');
-        var roleSelect = document.getElementById('role');
-        var isFormValid = true;
-
-        if (!emailInput.checkValidity()) {
-            emailInput.setCustomValidity('Please enter a valid email address.');
-            isFormValid = false;
-        }
-
-        if (!passwordInput.checkValidity()) {
-            passwordInput.setCustomValidity('Please enter a password.');
-            isFormValid = false;
-        }
-
-        if (!roleSelect.checkValidity()) {
-            roleSelect.setCustomValidity('Please select a role.');
-            isFormValid = false;
-        }
-
-        if (!isFormValid) {
-            event.preventDefault();
-        }
-    });
-</script>

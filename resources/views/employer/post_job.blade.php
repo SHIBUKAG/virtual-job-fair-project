@@ -189,7 +189,6 @@
                 }
             }
 
-            // ... (repeat for other fields)
 
             // If all validation passes, submit the form
             if (isValid) {
